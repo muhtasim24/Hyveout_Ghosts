@@ -1,0 +1,77 @@
+/*-----------------------------------------------------------*/
+/* This is the "border-box hack" providing intuitive control */
+/* over the height and width of elements on the screen.      */
+/* Courtesy of:                                              */
+/* https://www.paulirish.com/2012/box-sizing-border-box-ftw/ */
+/*-----------------------------------------------------------*/
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+
+/*-----------------------------------------------------------*/
+/* We want the page to be black and our game board centered. */
+/*-----------------------------------------------------------*/
+body {
+  background-color: black;
+}
+
+body > div {
+  margin: 120px auto;
+  text-align: center;
+}
+
+
+/*-----------------------------------------------------------*/
+/* Every game tile should be 50px by 50px and sitting next   */
+/* one another.                                              */
+/*-----------------------------------------------------------*/
+.tile {
+
+
+}
+
+
+/*-----------------------------------------------------------*/
+/* Pacman will encounter walls and coins.                    */
+/* Pacman can't move through walls, but can eat coins.       */
+/*-----------------------------------------------------------*/
+
+/* Walls are blue with an off-blue border. */
+.wall {
+
+}
+
+/* Coins are made by rounding the corners and  */
+/* making them much smaller than 50px by 50px. */
+.coin {
+
+}
+
+
+/*-----------------------------------------------------------*/
+/* We make pacman appear to face different directions by     */
+/* using different background images based on class name.    */
+/*-----------------------------------------------------------*/
+.pacman {
+  /* Image urls are relative to the stylesheet.      */
+  /* The '../images' means: "go to the parent folder */
+  /* then look inside the images folder.             */
+  background-image: url('../images/mizpacman.png');
+}
+
+.left {
+  background-image: url('../images/mizpacman-left.png');
+}
+
+.up {
+  background-image: url('../images/mizpacman-up.png');
+}
+
+.down {
+  background-image: url('../images/mizpacman-down.png');
+}
