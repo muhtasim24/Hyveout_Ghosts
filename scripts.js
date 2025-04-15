@@ -1,28 +1,18 @@
-//-------------------------------------------------------------
-// Game configuration data
-//-------------------------------------------------------------
+const gameContainer = document.getElementById('game-container');
 
-// This is a numerical representation of the pacman game.
-// It uses numbers to represent walls, coins, empty space, and pacman.
+
 let gameData = [
   [1,1,1,1,1,1,1,1,1,1,1,1,1],
+  [1,2,2,2,2,2,2,2,2,2,2,2,1],
+  [1,2,1,1,2,1,1,1,2,1,1,2,1],
   [1,2,2,2,2,2,1,2,2,2,2,2,1],
-  [1,2,1,1,1,2,1,2,1,1,1,2,1],
-  [1,2,1,2,2,2,2,2,2,2,1,2,1],
-  [1,2,2,2,1,1,5,1,1,2,2,2,1],
-  [1,2,1,2,2,2,2,2,2,2,1,2,1],
-  [1,2,1,1,2,2,1,2,2,1,1,2,1],
+  [1,2,1,1,1,2,5,2,1,1,1,2,1],
   [1,2,2,2,2,2,1,2,2,2,2,2,1],
   [1,1,1,1,1,1,1,1,1,1,1,1,1]
+
 ];
+// 1 = Wall, 2 = Coins, 3 = Empty Ground, 5 = Pacman
 
-// Specifically, a wall is represented by the number 1,
-// a coin is the number 2, empty ground is the number 3,
-// and Pacman is the number 5.
-
-
-// In our code below, we want to be able to refer to names of things,
-// and not numbers. To make that possible, we set up a few labels.
 const WALL   = 1;
 const COIN   = 2;
 const GROUND = 3;
@@ -32,6 +22,7 @@ const PACMAN = 5;
 // We will use the identifier "map" to refer to the game map.
 // We won't assign this until later on, when we generate it
 // using the gameData.
+// temporary map, since we will redraw the map every second
 let map;
 
 // We need to keep track of Pacman's location on the game board.
@@ -53,6 +44,34 @@ function createTiles(data) {
   // We'll keep the DOM elements in an array.
   let tilesArray = [];
 
+  for (let row of data) {
+
+    for (let col of row) { // col is the # in the row
+      
+      let tile = document.createElement('div');
+      tile.classList.add('tile');
+      
+      // finding what number col is
+      // whatver it is, we add the associated class, so it takes its properties
+      if (col === WALL) {
+        tile.classList.add('wall');
+      } else if (col === COIN) {
+        tile.classList.add('coin');
+      } else if (col === GROUND) {
+        tile.classList.add('ground');
+      } else if (col === PACMAN) {
+        tile.classList.add('pacman');
+        tile.classList.add(pacman.direction); // add the class direction so the img is showing that direction
+      }
+
+      tilesArray.push(tile); // add that tile to the Array
+    }
+
+    // to get to the next row when drawing the map
+    let brTile = document.createElement('br');
+    tilesArray.push(brTile);
+  }
+
   // At the end of our function, we return the array
   // of configured tiles.
   return tilesArray;
@@ -64,13 +83,18 @@ function drawMap() {
   map = document.createElement('div');
 
   let tiles = createTiles(gameData);
+  // for every tile in tiles
+  for (let tile of tiles) {
+    // add the tile to the map
+    map.append(tile)
+  }
 
-  document.body.appendChild(map);
+  gameContainer.appendChild(map); 
 }
 
 // This function removes the map element from the page.
 function eraseMap() {
-  document.body.removeChild(map);
+  gameContainer.removeChild(map);
 }
 
 //-------------------------------------------------------------
@@ -83,6 +107,22 @@ function eraseMap() {
 // - if we didn't hit a wall, set pacman's old location to empty space
 // - update pacman's location
 // - draw pacman in the new location
+let currentDirection = null;
+
+function gameLoop() {
+  if (currentDirection === 'left') {
+    moveLeft();
+  } else if (currentDirection === 'right') {
+    moveRight();
+  } else if (currentDirection === 'up') {
+    moveUp();
+  } else if (currentDirection === 'down') {
+    moveDown();
+  }
+
+  eraseMap();
+  drawMap();
+}
 
 function moveDown() {
   pacman.direction = 'down';
@@ -125,14 +165,18 @@ function moveRight() {
 // that handles that key press.
 function setupKeyboardControls() {
   document.addEventListener('keydown', function (e) {
-
-    console.log(e.keyCode);
-
-    // After every move, we erase the map and redraw it.
-    eraseMap();
-    drawMap();
+    if (e.key === "ArrowLeft") {
+      currentDirection = 'left';
+    } else if (e.key === "ArrowUp") {
+      currentDirection = 'up';
+    } else if (e.key === "ArrowRight") {
+      currentDirection = 'right';
+    } else if (e.key === "ArrowDown") {
+      currentDirection = 'down';
+    }
   });
 }
+
 
 //-------------------------------------------------------------
 // Main game setup function
@@ -142,6 +186,8 @@ function main() {
   // keyboard controls.
   drawMap();
   setupKeyboardControls();
+  setInterval(gameLoop, 200); // adjust 200ms to your desired speed
+
 }
 
 // Finally, after we define all of our functions, we need to start
