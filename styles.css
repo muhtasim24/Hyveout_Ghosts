@@ -70,6 +70,10 @@ body > div {
   background-image: url('/images/mizpacman-down.png');
 }
 
+.ghost {
+  background: blue;
+}
+
 /* TOUCH BUTTONS */
 #game-container {
   margin-bottom: 20px;

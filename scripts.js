@@ -7,7 +7,7 @@ const buttonRight = document.getElementById('right');
 
 let gameData = [
   [1,1,1,1,1,1,1,1,1,1,1,1,1],
-  [1,2,2,2,2,2,2,2,2,2,2,2,1],
+  [1,2,2,2,2,2,6,2,2,2,2,2,1],
   [1,2,1,1,2,1,1,1,2,1,1,2,1],
   [1,2,2,2,2,2,1,2,2,2,2,2,1],
   [1,2,1,1,1,2,5,2,1,1,1,2,1],
@@ -21,6 +21,8 @@ const WALL   = 1;
 const COIN   = 2;
 const GROUND = 3;
 const PACMAN = 5;
+const GHOST  = 6;
+
 
 
 // We will use the identifier "map" to refer to the game map.
@@ -37,6 +39,12 @@ let pacman = {
   y: 4,
   direction: 'right'
 };
+
+let ghost = {
+  x: 6,
+  y: 1,
+  direction: 'left'
+}
 
 
 //-------------------------------------------------------------
@@ -66,6 +74,9 @@ function createTiles(data) {
       } else if (col === PACMAN) {
         tile.classList.add('pacman');
         tile.classList.add(pacman.direction); // add the class direction so the img is showing that direction
+      } else if (col === GHOST) {
+        tile.classList.add('ghost');
+        tile.classList.add(ghost.direction);
       }
 
       tilesArray.push(tile); // add that tile to the Array
@@ -113,7 +124,38 @@ function eraseMap() {
 // - draw pacman in the new location
 let currentDirection = null;
 
+// this will generate a randomDirection
+// it will also check if the random direction is a wall, if it is it will generate another number
+function randomDirection(lastMove) {
+  // lets say random move is right, right becomes lastMove
+  // so i dont want ghost to keep going between left and right
+  // so if they go right, they cannot go left until another move
+  // IF lastMove = right, they cannot go left
+  // if lastmove = down, they cannot go up
+  let random = Math.floor(Math.random() * 4);
+  // UP
+  if (random == 0 && gameData[ghost.y-1][ghost.x] !== WALL && lastMove !== 'down') {
+    return random;
+  }
+  // DOWN
+  else if (random == 1 && gameData[ghost.y+1][ghost.x] !== WALL && lastMove !== 'up') {
+    return random;
+  }
+  // LEFT
+  else if (random == 2 && gameData[ghost.y][ghost.x - 1] && lastMove !== 'right') {
+    return random;
+  } 
+  // RIGHT
+  else if (random == 3 && gameData[ghost.y][ghost.x + 1] && lastMove !== 'left') {
+    return random;
+  } 
+  // if the number we get is a WALL, then call function again
+  else {
+    randomDirection();
+  }
+}
 function gameLoop() {
+  
   if (currentDirection === 'left') {
     moveLeft();
   } else if (currentDirection === 'right') {
@@ -122,6 +164,29 @@ function gameLoop() {
     moveUp();
   } else if (currentDirection === 'down') {
     moveDown();
+  }
+
+  // each time we get here i want the ghost to move as well, so we will select a random direction for the ghost
+  let lastMove = 'up';
+  let ghostMove = randomDirection()
+  //console.log(randomDirection);
+  if (ghostMove == 0) {
+    // if its a 
+    ghostUp();
+    lastMove = 'up';
+    console.log('ghost up');
+  } else if (ghostMove == 1) {
+    ghostDown();
+    lastMove = 'down';
+    console.log('ghost down');
+  } else if (ghostMove == 2) {
+    ghostLeft();
+    lastMove = 'left';
+    console.log('ghost left');
+  } else if (ghostMove == 3) {
+    ghostRight()
+    lastMove = 'right';
+    console.log('ghost right');
   }
 
   eraseMap();
@@ -137,12 +202,43 @@ function moveDown() {
   }
 }
 
+function ghostDown() {
+  ghost.direction = 'ghost';
+  if (gameData[ghost.y+1][ghost.x] !== WALL) {
+    // if its not a wall it can be ground or a coin
+    // if its a coin, stay as COIN, if its ground stay as ground
+    if (gameData[ghost.y + 1][ghost.x] == GROUND){
+      gameData[ghost.y][ghost.x] = GROUND; // where they are NOW becomes GROUND
+    } else {
+      gameData[ghost.y][ghost.x] = COIN; // where they are now becomes a coin
+    }
+    ghost.y = ghost.y + 1;
+    gameData[ghost.y][ghost.x] = GHOST;
+  }
+}
+
 function moveUp() {
   pacman.direction = 'up';
   if (gameData[pacman.y-1][pacman.x] !== WALL) {
     gameData[pacman.y][pacman.x] = GROUND;
     pacman.y = pacman.y - 1;
     gameData[pacman.y][pacman.x] = PACMAN;
+  }
+}
+// if its a not a wall, it can be ground or coin
+// if it is a wall do nothing
+function ghostUp() {
+  ghost.direction = 'up';
+  if (gameData[ghost.y-1][ghost.x] !== WALL) {
+    // if its not a wall it can be ground or a coin
+    // if its a coin, stay as COIN, if its ground stay as ground
+    if (gameData[ghost.y-1][ghost.x] == GROUND){
+      gameData[ghost.y][ghost.x] = GROUND; // where they are NOW becomes GROUND
+    } else {
+      gameData[ghost.y][ghost.x] = COIN; // where they are now becomes a coin
+    }
+    ghost.y = ghost.y - 1;
+    gameData[ghost.y][ghost.x] = GHOST;
   }
 }
 
@@ -155,6 +251,21 @@ function moveLeft() {
   }
 }
 
+function ghostLeft() {
+  ghost.direction = 'left';
+  if (gameData[ghost.y][ghost.x-1] !== WALL) {
+    // if its not a wall it can be ground or a coin
+    // if its a coin, stay as COIN, if its ground stay as ground
+    if (gameData[ghost.y][ghost.x-1] == GROUND){
+      gameData[ghost.y][ghost.x] = GROUND; // where they are NOW becomes GROUND
+    } else {
+      gameData[ghost.y][ghost.x] = COIN; // where they are now becomes a coin
+    }
+    ghost.x = ghost.x - 1;
+    gameData[ghost.y][ghost.x] = GHOST;
+  }
+}
+
 function moveRight() {
   pacman.direction = 'right';
   if (gameData[pacman.y][pacman.x+1] !== WALL) {
@@ -164,6 +275,20 @@ function moveRight() {
   }
 }
 
+function ghostRight() {
+  ghost.direction = 'right';
+  if (gameData[ghost.y][ghost.x+1] !== WALL) {
+    // if its not a wall it can be ground or a coin
+    // if its a coin, stay as COIN, if its ground stay as ground
+    if (gameData[ghost.y][ghost.x+1] == GROUND){
+      gameData[ghost.y][ghost.x] = GROUND; // where they are NOW becomes GROUND
+    } else {
+      gameData[ghost.y][ghost.x] = COIN; // where they are now becomes a coin
+    }
+    ghost.x = ghost.x + 1 ;
+    gameData[ghost.y][ghost.x] = GHOST;
+  }
+}
 // This function sets up the listener for the whole page.
 // Specifically, when the user presses a key, we run a function
 // that handles that key press.
