@@ -1,4 +1,8 @@
 const gameContainer = document.getElementById('game-container');
+const buttonUp = document.getElementById('up');
+const buttonDown = document.getElementById('down');
+const buttonLeft = document.getElementById('left');
+const buttonRight = document.getElementById('right');
 
 
 let gameData = [
@@ -165,6 +169,8 @@ function moveRight() {
 // that handles that key press.
 function setupKeyboardControls() {
   document.addEventListener('keydown', function (e) {
+    console.log(e.key);
+
     if (e.key === "ArrowLeft") {
       currentDirection = 'left';
     } else if (e.key === "ArrowUp") {
@@ -174,6 +180,19 @@ function setupKeyboardControls() {
     } else if (e.key === "ArrowDown") {
       currentDirection = 'down';
     }
+  });
+
+  buttonUp.addEventListener('touchstart', function (e) {
+    currentDirection = 'up';
+  });
+  buttonDown.addEventListener('touchstart', function (e) {
+    currentDirection = 'down';
+  });
+  buttonLeft.addEventListener('touchstart', function (e) {
+    currentDirection = 'left';
+  });
+  buttonRight.addEventListener('touchstart', function (e) {
+    currentDirection = 'right';
   });
 }
 
@@ -186,7 +205,7 @@ function main() {
   // keyboard controls.
   drawMap();
   setupKeyboardControls();
-  setInterval(gameLoop, 200); // adjust 200ms to your desired speed
+  setInterval(gameLoop, 300); // adjust 200ms to your desired speed
 
 }
 
