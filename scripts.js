@@ -4,14 +4,14 @@ const buttonDown = document.getElementById('down');
 const buttonLeft = document.getElementById('left');
 const buttonRight = document.getElementById('right');
 
-
+let totalCoins = 36;
 let gameData = [
   [1,1,1,1,1,1,1,1,1,1,1,1,1],
   [1,2,2,2,2,2,6,2,2,2,2,2,1],
   [1,2,1,1,2,1,1,1,2,1,1,2,1],
   [1,2,2,2,2,2,1,2,2,2,2,2,1],
   [1,2,1,1,1,2,5,2,1,1,1,2,1],
-  [1,2,2,2,2,2,1,2,2,2,2,2,1],
+  [1,2,2,2,2,2,1,2,2,2,2,10,1],
   [1,1,1,1,1,1,1,1,1,1,1,1,1]
 
 ];
@@ -22,7 +22,9 @@ const COIN   = 2;
 const GROUND = 3;
 const PACMAN = 5;
 const GHOST  = 6;
+const POWER = 10;
 
+let powerActive = false;
 
 
 // We will use the identifier "map" to refer to the game map.
@@ -77,6 +79,8 @@ function createTiles(data) {
       } else if (col === GHOST) {
         tile.classList.add('ghost');
         tile.classList.add(ghost.direction);
+      } else if (col === POWER) {
+        tile.classList.add('power');
       }
 
       tilesArray.push(tile); // add that tile to the Array
@@ -151,11 +155,16 @@ function randomDirection(lastMove) {
   } 
   // if the number we get is a WALL, then call function again
   else {
-    randomDirection();
+    randomDirection(lastMove);
   }
 }
 function gameLoop() {
-  
+  console.log(powerActive);
+
+  if (gameOver()) {
+    alert("game Over");
+  }
+
   if (currentDirection === 'left') {
     moveLeft();
   } else if (currentDirection === 'right') {
@@ -196,6 +205,18 @@ function gameLoop() {
 function moveDown() {
   pacman.direction = 'down';
   if (gameData[pacman.y+1][pacman.x] !== WALL) {
+    if (gameData[pacman.y+1][pacman.x] === POWER){
+      gameData[pacman.y][pacman.x] = GROUND;
+      totalCoins -= 1;
+      powerActive = true;
+      setTimeout(() => {
+        powerActive = false; // Deactivate after timeout
+    }, 3000); // 5 seconds
+    }
+    else if (gameData[pacman.y+1][pacman.x] === COIN) {
+      totalCoins -= 1;
+      console.log(totalCoins);
+    }
     gameData[pacman.y][pacman.x] = GROUND;
     pacman.y = pacman.y + 1 ;
     gameData[pacman.y][pacman.x] = PACMAN;
@@ -220,7 +241,19 @@ function ghostDown() {
 function moveUp() {
   pacman.direction = 'up';
   if (gameData[pacman.y-1][pacman.x] !== WALL) {
-    gameData[pacman.y][pacman.x] = GROUND;
+    if (gameData[pacman.y-1][pacman.x] === POWER){
+      powerActive = true;
+      gameData[pacman.y][pacman.x] = GROUND;
+      totalCoins -= 1;
+      setTimeout(() => {
+        powerActive = false; // Deactivate after timeout
+    }, 3000); // 5 seconds
+    }
+    else if (gameData[pacman.y-1][pacman.x] === COIN){
+      gameData[pacman.y][pacman.x] = GROUND;
+      totalCoins -= 1;
+      console.log(totalCoins);
+    }
     pacman.y = pacman.y - 1;
     gameData[pacman.y][pacman.x] = PACMAN;
   }
@@ -245,8 +278,20 @@ function ghostUp() {
 function moveLeft() {
   pacman.direction = 'left';
   if (gameData[pacman.y][pacman.x-1] !== WALL) {
-    gameData[pacman.y][pacman.x] = GROUND;
-    pacman.x = pacman.x - 1 ;
+    if (gameData[pacman.y][pacman.x-1] === POWER){
+      gameData[pacman.y][pacman.x] = GROUND;
+      powerActive = true;
+      totalCoins -= 1;
+      setTimeout(() => {
+        powerActive = false; // Deactivate after timeout
+    }, 3000); // 5 seconds
+    }
+    else if (gameData[pacman.y][pacman.x-1] === COIN) {
+      gameData[pacman.y][pacman.x] = GROUND;
+      totalCoins -= 1;
+      console.log(totalCoins);
+    }
+    pacman.x = pacman.x - 1;
     gameData[pacman.y][pacman.x] = PACMAN;
   }
 }
@@ -269,8 +314,20 @@ function ghostLeft() {
 function moveRight() {
   pacman.direction = 'right';
   if (gameData[pacman.y][pacman.x+1] !== WALL) {
+    if (gameData[pacman.y][pacman.x+1] === POWER){
+      powerActive = true;
+      setTimeout(() => {
+        powerActive = false; // Deactivate after timeout
+    }, 3000); // 5 seconds
     gameData[pacman.y][pacman.x] = GROUND;
-    pacman.x = pacman.x + 1 ;
+    totalCoins -= 1;
+    }
+    else if (gameData[pacman.y][pacman.x+1] === COIN) {
+      gameData[pacman.y][pacman.x] = GROUND;
+      totalCoins -= 1;
+      console.log(totalCoins);
+    }
+    pacman.x = pacman.x + 1;
     gameData[pacman.y][pacman.x] = PACMAN;
   }
 }
@@ -289,6 +346,16 @@ function ghostRight() {
     gameData[ghost.y][ghost.x] = GHOST;
   }
 }
+
+function gameOver() {
+
+  if (totalCoins == 0 || gameData[ghost.y][ghost.x] === gameData[pacman.y][pacman.x]) {
+    return true;
+  }
+  return false;
+}
+
+
 // This function sets up the listener for the whole page.
 // Specifically, when the user presses a key, we run a function
 // that handles that key press.
