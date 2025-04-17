@@ -4,7 +4,7 @@ const buttonDown = document.getElementById('down');
 const buttonLeft = document.getElementById('left');
 const buttonRight = document.getElementById('right');
 
-let totalCoins = 36;
+let totalCoins = 38;
 let gameData = [
   [1,1,1,1,1,1,1,1,1,1,1,1,1],
   [1,2,2,2,2,2,6,2,2,2,2,2,1],
@@ -214,10 +214,13 @@ function moveDown() {
     }, 3000); // 5 seconds
     }
     else if (gameData[pacman.y+1][pacman.x] === COIN) {
+      gameData[pacman.y][pacman.x] = GROUND;
       totalCoins -= 1;
       console.log(totalCoins);
     }
-    gameData[pacman.y][pacman.x] = GROUND;
+    else if (gameData[pacman.y+1][pacman.x] === GROUND) {
+      gameData[pacman.y][pacman.x] = GROUND;
+    }
     pacman.y = pacman.y + 1 ;
     gameData[pacman.y][pacman.x] = PACMAN;
   }
@@ -253,6 +256,9 @@ function moveUp() {
       gameData[pacman.y][pacman.x] = GROUND;
       totalCoins -= 1;
       console.log(totalCoins);
+    }
+    else if (gameData[pacman.y-1][pacman.x] === GROUND) {
+      gameData[pacman.y][pacman.x] = GROUND;
     }
     pacman.y = pacman.y - 1;
     gameData[pacman.y][pacman.x] = PACMAN;
@@ -291,6 +297,9 @@ function moveLeft() {
       totalCoins -= 1;
       console.log(totalCoins);
     }
+    else if (gameData[pacman.y][pacman.x-1] === GROUND) {
+      gameData[pacman.y][pacman.x] = GROUND;
+    }
     pacman.x = pacman.x - 1;
     gameData[pacman.y][pacman.x] = PACMAN;
   }
@@ -326,6 +335,9 @@ function moveRight() {
       gameData[pacman.y][pacman.x] = GROUND;
       totalCoins -= 1;
       console.log(totalCoins);
+    }
+    else if (gameData[pacman.y][pacman.x+1] === GROUND) {
+      gameData[pacman.y][pacman.x] = GROUND;
     }
     pacman.x = pacman.x + 1;
     gameData[pacman.y][pacman.x] = PACMAN;
