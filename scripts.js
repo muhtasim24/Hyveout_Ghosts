@@ -15,6 +15,8 @@ let gameData = [
   [1,1,1,1,1,1,1,1,1,1,1,1,1]
 
 ];
+
+let gameSpeedInt = setInterval(gameLoop, 300); // adjust 200ms to your desired speed
 // 1 = Wall, 2 = Coins, 3 = Empty Ground, 5 = Pacman
 
 const WALL   = 1;
@@ -158,11 +160,15 @@ function randomDirection(lastMove) {
     randomDirection(lastMove);
   }
 }
+
+
 function gameLoop() {
   console.log(powerActive);
 
   if (gameOver()) {
     alert("game Over");
+    clearInterval(gameSpeedInt);
+    // give them option to restart or go to music video once game ends
   }
 
   if (currentDirection === 'left') {
@@ -361,9 +367,10 @@ function ghostRight() {
 
 function gameOver() {
 
-  if (totalCoins == 0 || gameData[ghost.y][ghost.x] === gameData[pacman.y][pacman.x]) {
+  if (totalCoins == 0 || (powerActive == false && gameData[ghost.y][ghost.x] === gameData[pacman.y][pacman.x])) {
     return true;
   }
+  // if they collide but powerUp is Actie
   return false;
 }
 
@@ -409,8 +416,7 @@ function main() {
   // keyboard controls.
   drawMap();
   setupKeyboardControls();
-  setInterval(gameLoop, 300); // adjust 200ms to your desired speed
-
+  gameSpeedInt;
 }
 
 // Finally, after we define all of our functions, we need to start
