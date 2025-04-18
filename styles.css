@@ -23,7 +23,7 @@ body > div {
 /*-----------------------------------------------------------*/
 .tile {
   width: 7vw;
-  height: 4vh;
+  height: 5vh;
   display: inline-block; /*so blocks are next to each other*/
   vertical-align: top;
 
