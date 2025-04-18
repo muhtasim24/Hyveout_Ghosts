@@ -86,8 +86,12 @@ body > div {
 }
 
 .ghost {
-  background: blue;
+  background-image: url('/images/ghost.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
+
 
 /* TOUCH BUTTONS */
 #game-container {

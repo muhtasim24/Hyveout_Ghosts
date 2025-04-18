@@ -46,7 +46,7 @@ let pacman = {
 let ghost = {
   x: 6,
   y: 1,
-  direction: 'left'
+  direction: 'n'
 }
 
 
@@ -79,7 +79,7 @@ function createTiles(data) {
         tile.classList.add(pacman.direction); // add the class direction so the img is showing that direction
       } else if (col === GHOST) {
         tile.classList.add('ghost');
-        tile.classList.add(ghost.direction);
+        // tile.classList.add(ghost.direction);
       } else if (col === POWER) {
         tile.classList.add('power');
       }
@@ -151,11 +151,11 @@ function randomDirection(lastMove) {
 function gameLoop() {
   console.log(powerActive);
 
-  if (gameOver()) {
-    alert("game Over");
-    clearInterval(gameSpeedInt);
-    // give them option to restart or go to music video once game ends
-  }
+  // if (gameOver()) {
+  //   // alert("game Over");
+  //   // clearInterval(gameSpeedInt);
+  //   // give them option to restart or go to music video once game ends
+  // }
 
   if (currentDirection === 'left') {
     moveLeft();
