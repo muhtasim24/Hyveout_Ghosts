@@ -9,6 +9,8 @@ html {
 
 body {
   background-color: rgb(188, 28, 156);
+  touch-action: manipulation;
+
 }
 /* game board is centered and slightly below from the top*/ 
 body > div {
@@ -105,6 +107,8 @@ body > div {
   background-color: #C715FF;
   color: #000;
   font-weight: bold;
+  touch-action: manipulation;
+
 }
 
 .control-btn:active {
