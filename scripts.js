@@ -16,7 +16,6 @@ let gameData = [
 
 ];
 
-let gameSpeedInt = setInterval(gameLoop, 300); // adjust 200ms to your desired speed
 // 1 = Wall, 2 = Coins, 3 = Empty Ground, 5 = Pacman
 
 const WALL   = 1;
@@ -133,32 +132,19 @@ let currentDirection = null;
 // this will generate a randomDirection
 // it will also check if the random direction is a wall, if it is it will generate another number
 function randomDirection(lastMove) {
-  // lets say random move is right, right becomes lastMove
-  // so i dont want ghost to keep going between left and right
-  // so if they go right, they cannot go left until another move
-  // IF lastMove = right, they cannot go left
-  // if lastmove = down, they cannot go up
-  let random = Math.floor(Math.random() * 4);
-  // UP
-  if (random == 0 && gameData[ghost.y-1][ghost.x] !== WALL && lastMove !== 'down') {
-    return random;
-  }
-  // DOWN
-  else if (random == 1 && gameData[ghost.y+1][ghost.x] !== WALL && lastMove !== 'up') {
-    return random;
-  }
-  // LEFT
-  else if (random == 2 && gameData[ghost.y][ghost.x - 1] && lastMove !== 'right') {
-    return random;
-  } 
-  // RIGHT
-  else if (random == 3 && gameData[ghost.y][ghost.x + 1] && lastMove !== 'left') {
-    return random;
-  } 
-  // if the number we get is a WALL, then call function again
-  else {
-    randomDirection(lastMove);
-  }
+  const directions = [0, 1, 2, 3];
+  const validMoves = directions.filter((dir) => {
+    if (dir === 0 && gameData[ghost.y - 1][ghost.x] !== WALL && lastMove !== 'down') return true;
+    if (dir === 1 && gameData[ghost.y + 1][ghost.x] !== WALL && lastMove !== 'up') return true;
+    if (dir === 2 && gameData[ghost.y][ghost.x - 1] !== WALL && lastMove !== 'right') return true;
+    if (dir === 3 && gameData[ghost.y][ghost.x + 1] !== WALL && lastMove !== 'left') return true;
+    return false;
+  });
+
+  if (validMoves.length === 0) return null;
+
+  const randomIndex = Math.floor(Math.random() * validMoves.length);
+  return validMoves[randomIndex];
 }
 
 
@@ -182,25 +168,20 @@ function gameLoop() {
   }
 
   // each time we get here i want the ghost to move as well, so we will select a random direction for the ghost
-  let lastMove = 'up';
-  let ghostMove = randomDirection()
+  let ghostMove = randomDirection();
   //console.log(randomDirection);
   if (ghostMove == 0) {
     // if its a 
     ghostUp();
-    lastMove = 'up';
     console.log('ghost up');
   } else if (ghostMove == 1) {
     ghostDown();
-    lastMove = 'down';
     console.log('ghost down');
   } else if (ghostMove == 2) {
     ghostLeft();
-    lastMove = 'left';
     console.log('ghost left');
   } else if (ghostMove == 3) {
     ghostRight()
-    lastMove = 'right';
     console.log('ghost right');
   }
 
@@ -217,14 +198,14 @@ function moveDown() {
       powerActive = true;
       setTimeout(() => {
         powerActive = false; // Deactivate after timeout
-    }, 3000); // 5 seconds
+    }, 5000); // 5 seconds
     }
     else if (gameData[pacman.y+1][pacman.x] === COIN) {
       gameData[pacman.y][pacman.x] = GROUND;
       totalCoins -= 1;
       console.log(totalCoins);
     }
-    else if (gameData[pacman.y+1][pacman.x] === GROUND) {
+    else if (gameData[pacman.y+1][pacman.x] === GROUND || (gameData[pacman.y+1][pacman.x] === GHOST && powerActive)) {
       gameData[pacman.y][pacman.x] = GROUND;
     }
     pacman.y = pacman.y + 1 ;
@@ -256,14 +237,14 @@ function moveUp() {
       totalCoins -= 1;
       setTimeout(() => {
         powerActive = false; // Deactivate after timeout
-    }, 3000); // 5 seconds
+    }, 5000); // 5 seconds
     }
     else if (gameData[pacman.y-1][pacman.x] === COIN){
       gameData[pacman.y][pacman.x] = GROUND;
       totalCoins -= 1;
       console.log(totalCoins);
     }
-    else if (gameData[pacman.y-1][pacman.x] === GROUND) {
+    else if (gameData[pacman.y-1][pacman.x] === GROUND || (gameData[pacman.y-1][pacman.x] === GHOST && powerActive)) {
       gameData[pacman.y][pacman.x] = GROUND;
     }
     pacman.y = pacman.y - 1;
@@ -296,14 +277,14 @@ function moveLeft() {
       totalCoins -= 1;
       setTimeout(() => {
         powerActive = false; // Deactivate after timeout
-    }, 3000); // 5 seconds
+    }, 5000); // 5 seconds
     }
     else if (gameData[pacman.y][pacman.x-1] === COIN) {
       gameData[pacman.y][pacman.x] = GROUND;
       totalCoins -= 1;
       console.log(totalCoins);
     }
-    else if (gameData[pacman.y][pacman.x-1] === GROUND) {
+    else if (gameData[pacman.y][pacman.x-1] === GROUND || (gameData[pacman.y][pacman.x-1] === GHOST && powerActive)) {
       gameData[pacman.y][pacman.x] = GROUND;
     }
     pacman.x = pacman.x - 1;
@@ -330,19 +311,19 @@ function moveRight() {
   pacman.direction = 'right';
   if (gameData[pacman.y][pacman.x+1] !== WALL) {
     if (gameData[pacman.y][pacman.x+1] === POWER){
+      gameData[pacman.y][pacman.x] = GROUND;
+      totalCoins -= 1;
       powerActive = true;
       setTimeout(() => {
         powerActive = false; // Deactivate after timeout
-    }, 3000); // 5 seconds
-    gameData[pacman.y][pacman.x] = GROUND;
-    totalCoins -= 1;
+    }, 5000); // 5 seconds
     }
     else if (gameData[pacman.y][pacman.x+1] === COIN) {
       gameData[pacman.y][pacman.x] = GROUND;
       totalCoins -= 1;
       console.log(totalCoins);
     }
-    else if (gameData[pacman.y][pacman.x+1] === GROUND) {
+    else if (gameData[pacman.y][pacman.x+1] === GROUND || (gameData[pacman.y][pacman.x+1] === GHOST && powerActive)) {
       gameData[pacman.y][pacman.x] = GROUND;
     }
     pacman.x = pacman.x + 1;
@@ -380,31 +361,16 @@ function gameOver() {
 // that handles that key press.
 function setupKeyboardControls() {
   document.addEventListener('keydown', function (e) {
-    console.log(e.key);
-
-    if (e.key === "ArrowLeft") {
-      currentDirection = 'left';
-    } else if (e.key === "ArrowUp") {
-      currentDirection = 'up';
-    } else if (e.key === "ArrowRight") {
-      currentDirection = 'right';
-    } else if (e.key === "ArrowDown") {
-      currentDirection = 'down';
-    }
+    if (e.key === "ArrowLeft") currentDirection = 'left';
+    else if (e.key === "ArrowUp") currentDirection = 'up';
+    else if (e.key === "ArrowRight") currentDirection = 'right';
+    else if (e.key === "ArrowDown") currentDirection = 'down';
   });
 
-  buttonUp.addEventListener('touchstart', function (e) {
-    currentDirection = 'up';
-  });
-  buttonDown.addEventListener('touchstart', function (e) {
-    currentDirection = 'down';
-  });
-  buttonLeft.addEventListener('touchstart', function (e) {
-    currentDirection = 'left';
-  });
-  buttonRight.addEventListener('touchstart', function (e) {
-    currentDirection = 'right';
-  });
+  buttonUp.addEventListener('touchstart', () => currentDirection = 'up');
+  buttonDown.addEventListener('touchstart', () => currentDirection = 'down');
+  buttonLeft.addEventListener('touchstart', () => currentDirection = 'left');
+  buttonRight.addEventListener('touchstart', () => currentDirection = 'right');
 }
 
 
@@ -416,7 +382,8 @@ function main() {
   // keyboard controls.
   drawMap();
   setupKeyboardControls();
-  gameSpeedInt;
+  //let gameSpeedInt = setInterval(gameLoop, 300); // adjust 200ms to your desired speed
+
 }
 
 // Finally, after we define all of our functions, we need to start
