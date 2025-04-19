@@ -402,7 +402,7 @@ function main() {
   // keyboard controls.
   drawMap();
   setupKeyboardControls();
-  // let gameSpeedInt = setInterval(gameLoop, 300); // adjust 200ms to your desired speed
+  let gameSpeedInt = setInterval(gameLoop, 300); // adjust 200ms to your desired speed
 
 }
 
