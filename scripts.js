@@ -82,7 +82,7 @@ function createTiles(data) {
         tile.classList.add(pacman.direction); // add the class direction so the img is showing that direction
       } else if (col === GHOST) {
         tile.classList.add('ghost');
-        tile.classList.add(ghost.direction);
+        //tile.classList.add(ghost.direction);
       } else if (col === POWER) {
         tile.classList.add('power');
       }
