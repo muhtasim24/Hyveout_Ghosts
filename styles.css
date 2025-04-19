@@ -17,7 +17,24 @@ body {
   touch-action: manipulation;
 
 }
-/* game board is centered and slightly below from the top*/ 
+
+/* Main border */
+.main-border {
+  width: 100%;
+  height: 100%;
+  background-image: url("/images/main-border.png");
+  background-size: 100% 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Keeps static confined */
+  z-index: 99;
+}
+/* game board is centered and slightly below from the top  */
 body > div {
   margin: auto;
   text-align: center;
@@ -26,12 +43,22 @@ body > div {
 h1 {
   font-family: 'PressStart2P', sans-serif;
   color: white;
-  font-size: 1.4rem;
   text-align: center;
 }
 
+.titleHyve {
+  margin-top: 120px;
+  margin-bottom: 0px;
+  font-size: 1.1rem;
+}
+
+.titleGhost {
+  margin-top: 0px;
+  font-size: 1.1rem;
+}
 .scoreCard {
   font-size: 3rem;
+  margin-bottom: 5px;
 }
 
 /*-----------------------------------------------------------*/
@@ -39,8 +66,8 @@ h1 {
 /* one another.                                              */
 /*-----------------------------------------------------------*/
 .tile {
-  width: 6.3vw;
-  height: 4vh;
+  width: 5vw;
+  height: 3vh;
   display: inline-block; /*so blocks are next to each other*/
   vertical-align: top;
 
@@ -55,7 +82,7 @@ h1 {
 /* Walls are blue with an off-blue border. */
 .wall {
   background-color: #34003D;
-  border: 2px solid rgb(217, 12, 152);
+  border: 2px solid rgb(191, 34, 222);
 }
 
 
@@ -110,12 +137,15 @@ h1 {
 
 
 /* TOUCH BUTTONS */
-#game-container {
+.game-container {
   margin-bottom: 20px;
   background-color: #34003D;
-  border: 5px solid rgb(217, 12, 152);
-  display: inline-block; /* Helps the border fit snugly around the grid */
-  padding: 25px; /* Optional: adds some space inside the border */
+  border: 5px solid rgb(191, 34, 222);
+  display: flex; /* Helps the border fit snugly around the grid */
+  padding: 15px; /* Optional: adds some space inside the border */
+  justify-content: center;
+  align-items: center;
+  width: 80vw;
 }
 #controls {
   margin-top: 20px;
@@ -144,5 +174,9 @@ h1 {
     width: 50px;
     height: 50px;
   
+  }
+
+  .control-btn {
+    display: none;
   }
 }
