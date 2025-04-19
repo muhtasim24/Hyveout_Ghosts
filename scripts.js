@@ -3,6 +3,8 @@ const buttonUp = document.getElementById('up');
 const buttonDown = document.getElementById('down');
 const buttonLeft = document.getElementById('left');
 const buttonRight = document.getElementById('right');
+const scoreText = document.getElementById('score');
+var score = 0
 
 let totalCoins = 38;
 let gameData = [
@@ -12,7 +14,7 @@ let gameData = [
   [1,2,2,2,2,2,1,2,2,2,2,2,1],
   [1,2,1,1,1,2,5,2,1,1,1,2,1],
   [1,2,2,2,2,2,1,2,2,2,2,10,1],
-  [1,1,1,1,1,1,1,1,1,1,1,1,1]
+  [1,1,1,1,1,1,1,1,1,1,1,1,1],
 
 ];
 
@@ -24,6 +26,8 @@ const GROUND = 3;
 const PACMAN = 5;
 const GHOST  = 6;
 const POWER = 10;
+const VERT_BORDER = 11;
+const HOR_BORDER = 12;
 
 let powerActive = false;
 
@@ -62,7 +66,6 @@ function createTiles(data) {
   for (let row of data) {
 
     for (let col of row) { // col is the # in the row
-      
       let tile = document.createElement('div');
       tile.classList.add('tile');
       
@@ -150,6 +153,7 @@ function randomDirection(lastMove) {
 
 function gameLoop() {
   console.log(powerActive);
+  console.log(score);
 
   // if (gameOver()) {
   //   // alert("game Over");
@@ -195,6 +199,8 @@ function moveDown() {
     if (gameData[pacman.y+1][pacman.x] === POWER){
       gameData[pacman.y][pacman.x] = GROUND;
       totalCoins -= 1;
+      score += 1;
+      scoreText.textContent = score;
       powerActive = true;
       setTimeout(() => {
         powerActive = false; // Deactivate after timeout
@@ -203,6 +209,8 @@ function moveDown() {
     else if (gameData[pacman.y+1][pacman.x] === COIN) {
       gameData[pacman.y][pacman.x] = GROUND;
       totalCoins -= 1;
+      score += 1;
+      scoreText.textContent = score;
       console.log(totalCoins);
     }
     else if (gameData[pacman.y+1][pacman.x] === GROUND || (gameData[pacman.y+1][pacman.x] === GHOST && powerActive)) {
@@ -235,6 +243,8 @@ function moveUp() {
       powerActive = true;
       gameData[pacman.y][pacman.x] = GROUND;
       totalCoins -= 1;
+      score += 1;
+      scoreText.textContent = score;
       setTimeout(() => {
         powerActive = false; // Deactivate after timeout
     }, 5000); // 5 seconds
@@ -242,6 +252,8 @@ function moveUp() {
     else if (gameData[pacman.y-1][pacman.x] === COIN){
       gameData[pacman.y][pacman.x] = GROUND;
       totalCoins -= 1;
+      score += 1;
+      scoreText.textContent = score;
       console.log(totalCoins);
     }
     else if (gameData[pacman.y-1][pacman.x] === GROUND || (gameData[pacman.y-1][pacman.x] === GHOST && powerActive)) {
@@ -275,6 +287,8 @@ function moveLeft() {
       gameData[pacman.y][pacman.x] = GROUND;
       powerActive = true;
       totalCoins -= 1;
+      score += 1;
+      scoreText.textContent = score;
       setTimeout(() => {
         powerActive = false; // Deactivate after timeout
     }, 5000); // 5 seconds
@@ -282,6 +296,8 @@ function moveLeft() {
     else if (gameData[pacman.y][pacman.x-1] === COIN) {
       gameData[pacman.y][pacman.x] = GROUND;
       totalCoins -= 1;
+      score += 1;
+      scoreText.textContent = score;
       console.log(totalCoins);
     }
     else if (gameData[pacman.y][pacman.x-1] === GROUND || (gameData[pacman.y][pacman.x-1] === GHOST && powerActive)) {
@@ -313,6 +329,8 @@ function moveRight() {
     if (gameData[pacman.y][pacman.x+1] === POWER){
       gameData[pacman.y][pacman.x] = GROUND;
       totalCoins -= 1;
+      score += 1;
+      scoreText.textContent = score;
       powerActive = true;
       setTimeout(() => {
         powerActive = false; // Deactivate after timeout
@@ -321,6 +339,8 @@ function moveRight() {
     else if (gameData[pacman.y][pacman.x+1] === COIN) {
       gameData[pacman.y][pacman.x] = GROUND;
       totalCoins -= 1;
+      score += 1;
+      scoreText.textContent = score;
       console.log(totalCoins);
     }
     else if (gameData[pacman.y][pacman.x+1] === GROUND || (gameData[pacman.y][pacman.x+1] === GHOST && powerActive)) {
@@ -382,7 +402,7 @@ function main() {
   // keyboard controls.
   drawMap();
   setupKeyboardControls();
-  let gameSpeedInt = setInterval(gameLoop, 300); // adjust 200ms to your desired speed
+  // let gameSpeedInt = setInterval(gameLoop, 300); // adjust 200ms to your desired speed
 
 }
 

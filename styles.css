@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'PressStart2P';
+  src: url('pressStart2.ttf') format('truetype');
+}
+
 html {
   box-sizing: border-box;
   overflow: hidden;
@@ -8,24 +13,34 @@ html {
 }
 
 body {
-  background-color: rgb(188, 28, 156);
+  background-color: rgb(240, 108, 214);
   touch-action: manipulation;
 
 }
 /* game board is centered and slightly below from the top*/ 
 body > div {
-  margin: 120px auto;
+  margin: auto;
   text-align: center;
 }
 
+h1 {
+  font-family: 'PressStart2P', sans-serif;
+  color: white;
+  font-size: 1.6rem;
+  text-align: center;
+}
+
+.scoreCard {
+  font-size: 3rem;
+}
 
 /*-----------------------------------------------------------*/
 /* Every game tile should be 50px by 50px and sitting next   */
 /* one another.                                              */
 /*-----------------------------------------------------------*/
 .tile {
-  width: 7vw;
-  height: 5vh;
+  width: 6.3vw;
+  height: 4vh;
   display: inline-block; /*so blocks are next to each other*/
   vertical-align: top;
 
@@ -40,8 +55,9 @@ body > div {
 /* Walls are blue with an off-blue border. */
 .wall {
   background-color: #34003D;
-  border: 2px solid cornflowerblue;
+  border: 2px solid rgb(217, 12, 152);
 }
+
 
 /* Coins are made by rounding the corners and  */
 /* making them much smaller than 50px by 50px. */
@@ -96,6 +112,10 @@ body > div {
 /* TOUCH BUTTONS */
 #game-container {
   margin-bottom: 20px;
+  background-color: #34003D;
+  border: 5px solid rgb(217, 12, 152);
+  display: inline-block; /* Helps the border fit snugly around the grid */
+  padding: 25px; /* Optional: adds some space inside the border */
 }
 #controls {
   margin-top: 20px;
