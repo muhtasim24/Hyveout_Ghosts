@@ -110,13 +110,23 @@ function drawMap() {
 
   let tiles = createTiles(gameData);
   // for every tile in tiles
+  // Loop through all tiles
   for (let tile of tiles) {
-    // add the tile to the map
+    // Check if the tile is the ghost's current position
     if (tile.classList.contains('ghost')) {
-      if (powerActive) {
-        tile.classList.add('weakGhost'); // 👈 add class here based on state
+      // If the ghost's position is valid (not removed)
+      if (ghost.x !== -1 && ghost.y !== -1) {
+        // If the power-up is active, apply the 'weakGhost' class
+        if (powerActive) {
+          tile.classList.add('weakGhost');  // Change the appearance of the ghost
+        }
+        // Optionally, you can remove the ghost after collision with power-up here
+      } else {
+        // If ghost is removed (ghost.x or ghost.y is -1), don't draw it
+        tile.classList.remove('ghost');
       }
     }
+
     map.append(tile)
   }
 
@@ -143,6 +153,7 @@ let currentDirection = null;
 // this will generate a randomDirection
 // it will also check if the random direction is a wall, if it is it will generate another number
 function randomDirection(lastMove) {
+  if (ghost && ghost.x !== -1 && ghost.y !== -1) {
   const directions = [0, 1, 2, 3];
   const validMoves = directions.filter((dir) => {
     if (dir === 0 && gameData[ghost.y - 1][ghost.x] !== WALL && lastMove !== 'down') return true;
@@ -157,21 +168,29 @@ function randomDirection(lastMove) {
   const randomIndex = Math.floor(Math.random() * validMoves.length);
   return validMoves[randomIndex];
 }
+}
 
 
 function gameLoop() {
   console.log(powerActive);
   console.log(score);
     // ghosts should become blue
-
-  if (pacman.x === ghost.x && pacman.y === ghost.y && !powerActive) {
+  if (ghost && ghost.x !== -1 && ghost.y !== -1) {
+    if (pacman.x === ghost.x && pacman.y === ghost.y && !powerActive) {
     gameOver("Game Over! You were caught by the ghost!");
     return;
   }
+}
   
   if (totalCoins === 0) {
     gameOver("You Win! All coins collected!");
     return;
+  }
+
+  if (pacman.x === ghost.x && pacman.y === ghost.y && powerActive) {
+    // Remove the ghost from the map (or reset its position)
+    ghost.x = -1; // Or any value off the grid to "remove" it visually
+    ghost.y = -1;
   }
 
   if (currentDirection === 'left') {
@@ -234,10 +253,10 @@ function ghostDown() {
   if (gameData[ghost.y+1][ghost.x] !== WALL) {
     // if its not a wall it can be ground or a coin
     // if its a coin, stay as COIN, if its ground stay as ground
-    if (gameData[ghost.y + 1][ghost.x] == GROUND){
-      gameData[ghost.y][ghost.x] = GROUND; // where they are NOW becomes GROUND
+    if (gameData[ghost.y + 1][ghost.x] == COIN){
+      gameData[ghost.y][ghost.x] = COIN; // where they are NOW becomes GROUND
     } else {
-      gameData[ghost.y][ghost.x] = COIN; // where they are now becomes a coin
+      gameData[ghost.y][ghost.x] = GROUND; // where they are now becomes a coin
     }
     ghost.y = ghost.y + 1;
     gameData[ghost.y][ghost.x] = GHOST;
@@ -277,10 +296,10 @@ function ghostUp() {
   if (gameData[ghost.y-1][ghost.x] !== WALL) {
     // if its not a wall it can be ground or a coin
     // if its a coin, stay as COIN, if its ground stay as ground
-    if (gameData[ghost.y-1][ghost.x] == GROUND){
-      gameData[ghost.y][ghost.x] = GROUND; // where they are NOW becomes GROUND
+    if (gameData[ghost.y-1][ghost.x] == COIN){
+      gameData[ghost.y][ghost.x] = COIN; // where they are NOW becomes GROUND
     } else {
-      gameData[ghost.y][ghost.x] = COIN; // where they are now becomes a coin
+      gameData[ghost.y][ghost.x] = GROUND; // where they are now becomes a coin
     }
     ghost.y = ghost.y - 1;
     gameData[ghost.y][ghost.x] = GHOST;
@@ -319,10 +338,10 @@ function ghostLeft() {
   if (gameData[ghost.y][ghost.x-1] !== WALL) {
     // if its not a wall it can be ground or a coin
     // if its a coin, stay as COIN, if its ground stay as ground
-    if (gameData[ghost.y][ghost.x-1] == GROUND){
-      gameData[ghost.y][ghost.x] = GROUND; // where they are NOW becomes GROUND
+    if (gameData[ghost.y][ghost.x-1] == COIN){
+      gameData[ghost.y][ghost.x] = COIN; // where they are NOW becomes GROUND
     } else {
-      gameData[ghost.y][ghost.x] = COIN; // where they are now becomes a coin
+      gameData[ghost.y][ghost.x] = GROUND; // where they are now becomes a coin
     }
     ghost.x = ghost.x - 1;
     gameData[ghost.y][ghost.x] = GHOST;
@@ -361,10 +380,10 @@ function ghostRight() {
   if (gameData[ghost.y][ghost.x+1] !== WALL) {
     // if its not a wall it can be ground or a coin
     // if its a coin, stay as COIN, if its ground stay as ground
-    if (gameData[ghost.y][ghost.x+1] == GROUND){
-      gameData[ghost.y][ghost.x] = GROUND; // where they are NOW becomes GROUND
+    if (gameData[ghost.y][ghost.x+1] == COIN){
+      gameData[ghost.y][ghost.x] = COIN; // where they are NOW becomes GROUND
     } else {
-      gameData[ghost.y][ghost.x] = COIN; // where they are now becomes a coin
+      gameData[ghost.y][ghost.x] = GROUND; // where they are now becomes a coin
     }
     ghost.x = ghost.x + 1 ;
     gameData[ghost.y][ghost.x] = GHOST;
