@@ -6,6 +6,8 @@ const buttonRight = document.getElementById('right');
 const scoreText = document.getElementById('score');
 var score = 0;
 
+let gameSpeedInt = setInterval(gameLoop, 250); // adjust 200ms to your desired speed
+
 
 let totalCoins = 38;
 let gameData = [
@@ -162,11 +164,15 @@ function gameLoop() {
   console.log(score);
     // ghosts should become blue
 
-  // if (gameOver()) {
-  //   // alert("game Over");
-  //   // clearInterval(gameSpeedInt);
-  //   // give them option to restart or go to music video once game ends
-  // }
+  if (pacman.x === ghost.x && pacman.y === ghost.y && !powerActive) {
+    gameOver("Game Over! You were caught by the ghost!");
+    return;
+  }
+  
+  if (totalCoins === 0) {
+    gameOver("You Win! All coins collected!");
+    return;
+  }
 
   if (currentDirection === 'left') {
     moveLeft();
@@ -365,13 +371,13 @@ function ghostRight() {
   }
 }
 
-function gameOver() {
+function gameOver(message) {
+  clearInterval(gameSpeedInt);
 
-  if (totalCoins == 0 || (powerActive == false && gameData[ghost.y][ghost.x] === gameData[pacman.y][pacman.x])) {
-    return true;
+  // Show message and reload
+  if (confirm(`${message}\n\nPlay again?`)) {
+    location.reload(); // reloads the page
   }
-  // if they collide but powerUp is Actie
-  return false;
 }
 
 
@@ -401,8 +407,6 @@ function main() {
   // keyboard controls.
   drawMap();
   setupKeyboardControls();
-  let gameSpeedInt = setInterval(gameLoop, 250); // adjust 200ms to your desired speed
-
 }
 
 // Finally, after we define all of our functions, we need to start
