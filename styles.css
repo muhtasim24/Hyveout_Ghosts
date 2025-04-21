@@ -70,7 +70,6 @@ h1 {
   height: 3vh;
   display: inline-block; /*so blocks are next to each other*/
   vertical-align: top;
-
 }
 
 
@@ -135,6 +134,13 @@ h1 {
   background-position: center;
 }
 
+.weakGhost {
+  background-image: url('/images/weakGhost.png');  
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 
 /* TOUCH BUTTONS */
 .game-container {
@@ -167,6 +173,13 @@ h1 {
 
 .control-btn:active {
   background-color: #34003D;
+}
+
+.middle-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
 }
 
 @media (min-width: 992px){

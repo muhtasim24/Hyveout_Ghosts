@@ -4,7 +4,8 @@ const buttonDown = document.getElementById('down');
 const buttonLeft = document.getElementById('left');
 const buttonRight = document.getElementById('right');
 const scoreText = document.getElementById('score');
-var score = 0
+var score = 0;
+
 
 let totalCoins = 38;
 let gameData = [
@@ -109,6 +110,11 @@ function drawMap() {
   // for every tile in tiles
   for (let tile of tiles) {
     // add the tile to the map
+    if (tile.classList.contains('ghost')) {
+      if (powerActive) {
+        tile.classList.add('weakGhost'); // 👈 add class here based on state
+      }
+    }
     map.append(tile)
   }
 
@@ -154,6 +160,7 @@ function randomDirection(lastMove) {
 function gameLoop() {
   console.log(powerActive);
   console.log(score);
+    // ghosts should become blue
 
   // if (gameOver()) {
   //   // alert("game Over");
@@ -177,16 +184,12 @@ function gameLoop() {
   if (ghostMove == 0) {
     // if its a 
     ghostUp();
-    console.log('ghost up');
   } else if (ghostMove == 1) {
     ghostDown();
-    console.log('ghost down');
   } else if (ghostMove == 2) {
     ghostLeft();
-    console.log('ghost left');
   } else if (ghostMove == 3) {
     ghostRight()
-    console.log('ghost right');
   }
 
   eraseMap();
@@ -211,7 +214,6 @@ function moveDown() {
       totalCoins -= 1;
       score += 1;
       scoreText.textContent = score;
-      console.log(totalCoins);
     }
     else if (gameData[pacman.y+1][pacman.x] === GROUND || (gameData[pacman.y+1][pacman.x] === GHOST && powerActive)) {
       gameData[pacman.y][pacman.x] = GROUND;
@@ -254,7 +256,6 @@ function moveUp() {
       totalCoins -= 1;
       score += 1;
       scoreText.textContent = score;
-      console.log(totalCoins);
     }
     else if (gameData[pacman.y-1][pacman.x] === GROUND || (gameData[pacman.y-1][pacman.x] === GHOST && powerActive)) {
       gameData[pacman.y][pacman.x] = GROUND;
@@ -298,7 +299,6 @@ function moveLeft() {
       totalCoins -= 1;
       score += 1;
       scoreText.textContent = score;
-      console.log(totalCoins);
     }
     else if (gameData[pacman.y][pacman.x-1] === GROUND || (gameData[pacman.y][pacman.x-1] === GHOST && powerActive)) {
       gameData[pacman.y][pacman.x] = GROUND;
@@ -341,7 +341,6 @@ function moveRight() {
       totalCoins -= 1;
       score += 1;
       scoreText.textContent = score;
-      console.log(totalCoins);
     }
     else if (gameData[pacman.y][pacman.x+1] === GROUND || (gameData[pacman.y][pacman.x+1] === GHOST && powerActive)) {
       gameData[pacman.y][pacman.x] = GROUND;
