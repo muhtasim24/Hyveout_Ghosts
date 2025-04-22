@@ -6,7 +6,7 @@ const buttonRight = document.getElementById('right');
 const scoreText = document.getElementById('score');
 var score = 0;
 
-let gameSpeedInt = setInterval(gameLoop, 250); // adjust 200ms to your desired speed
+let gameSpeedInt = setInterval(gameLoop, 210); // adjust 200ms to your desired speed
 
 
 let totalCoins = 38;
@@ -177,13 +177,17 @@ function gameLoop() {
     // ghosts should become blue
   if (ghost && ghost.x !== -1 && ghost.y !== -1) {
     if (pacman.x === ghost.x && pacman.y === ghost.y && !powerActive) {
-    gameOver("Game Over! You were caught by the ghost!");
+    // gameOver("Game Over! You were caught by the ghost!");
+    clearInterval(gameSpeedInt);
+    showGameOverModal();
     return;
   }
 }
   
   if (totalCoins === 0) {
-    gameOver("You Win! All coins collected!");
+    clearInterval(gameSpeedInt);
+    window.location.href = 'https://youtu.be/0nF3FUwhVOw?si=sAxcGLYMdmX_d4tE';
+    // gameOver("You Win! All coins collected!");
     return;
   }
 
@@ -397,6 +401,15 @@ function gameOver(message) {
   if (confirm(`${message}\n\nPlay again?`)) {
     location.reload(); // reloads the page
   }
+}
+
+function showGameOverModal() {
+  const modal = document.getElementById('gameOverModal');
+  modal.style.display = 'flex'; // Show the modal
+
+  document.getElementById('restartBtn').addEventListener('click', () => {
+    location.reload(); // Simple way to restart game
+  });
 }
 
 
