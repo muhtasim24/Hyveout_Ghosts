@@ -428,7 +428,7 @@ gamepad.addEventListener('touchstart', function(e) {
     // Top
     gamepad.src = gamepadUp;
     currentDirection = "up";
-  } else if (y > height * 0.75) {
+  } else if (y > height * 0.8) {
     // Bottom
     gamepad.src = gamepadDown;
     currentDirection = "down";
@@ -436,7 +436,7 @@ gamepad.addEventListener('touchstart', function(e) {
     // Left
     gamepad.src = gamepadLeft;
     currentDirection = "left";
-  } else if (x > width * 0.75) {
+  } else if (x > width * 0.8) {
     // Right
     gamepad.src = gamepadRight;
     currentDirection = "right";
