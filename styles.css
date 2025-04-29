@@ -252,8 +252,8 @@ h1 {
 }
 @media (min-width: 992px){
   .tile {
-    width: 20px;
-    height: 20px;
+    width: 5vw;
+    height: 6vh;
   
   }
 
