@@ -6,7 +6,7 @@ const buttonRight = document.getElementById('right');
 const scoreText = document.getElementById('score');
 var score = 0;
 
-let gameSpeedInt = setInterval(gameLoop, 210); // adjust 200ms to your desired speed
+let gameSpeedInt = setInterval(gameLoop, 200); // adjust 200ms to your desired speed
 
 
 let totalCoins = 38;
@@ -61,82 +61,135 @@ let ghost = {
 // Game map creation functions
 //-------------------------------------------------------------
 // This function converts gameData into DOM elements.
-function createTiles(data) {
+// function createTiles(data) {
 
-  // We'll keep the DOM elements in an array.
-  let tilesArray = [];
+//   // We'll keep the DOM elements in an array.
+//   let tilesArray = [];
 
-  for (let row of data) {
+//   for (let row of data) {
 
-    for (let col of row) { // col is the # in the row
-      let tile = document.createElement('div');
-      tile.classList.add('tile');
+//     for (let col of row) { // col is the # in the row
+//       let tile = document.createElement('div');
+//       tile.classList.add('tile');
       
-      // finding what number col is
-      // whatver it is, we add the associated class, so it takes its properties
-      if (col === WALL) {
-        tile.classList.add('wall');
-      } else if (col === COIN) {
-        tile.classList.add('coin');
-      } else if (col === GROUND) {
-        tile.classList.add('ground');
-      } else if (col === PACMAN) {
-        tile.classList.add('pacman');
-        tile.classList.add(pacman.direction); // add the class direction so the img is showing that direction
-      } else if (col === GHOST) {
-        tile.classList.add('ghost');
-        //tile.classList.add(ghost.direction);
-      } else if (col === POWER) {
-        tile.classList.add('power');
-      }
+//       // finding what number col is
+//       // whatver it is, we add the associated class, so it takes its properties
+//       if (col === WALL) {
+//         tile.classList.add('wall');
+//       } else if (col === COIN) {
+//         tile.classList.add('coin');
+//       } else if (col === GROUND) {
+//         tile.classList.add('ground');
+//       } else if (col === PACMAN) {
+//         tile.classList.add('pacman');
+//         tile.classList.add(pacman.direction); // add the class direction so the img is showing that direction
+//       } else if (col === GHOST) {
+//         tile.classList.add('ghost');
+//         //tile.classList.add(ghost.direction);
+//       } else if (col === POWER) {
+//         tile.classList.add('power');
+//       }
 
-      tilesArray.push(tile); // add that tile to the Array
+//       tilesArray.push(tile); // add that tile to the Array
+//     }
+
+//     // to get to the next row when drawing the map
+//     let brTile = document.createElement('br');
+//     tilesArray.push(brTile);
+//   }
+
+//   // At the end of our function, we return the array
+//   // of configured tiles.
+//   return tilesArray;
+// }
+function initMap() {
+  map = document.createElement('div');
+  map.id = 'game-map';
+
+  for (let y = 0; y < gameData.length; y++) {
+    for (let x = 0; x < gameData[y].length; x++) {
+      const tile = document.createElement('div');
+      tile.classList.add(getTileClass(gameData[y][x]));
+      tile.dataset.x = x;
+      tile.dataset.y = y;
+      map.appendChild(tile);
     }
-
-    // to get to the next row when drawing the map
-    let brTile = document.createElement('br');
-    tilesArray.push(brTile);
   }
 
-  // At the end of our function, we return the array
-  // of configured tiles.
-  return tilesArray;
+  gameContainer.appendChild(map);
 }
 
+function updateMap() {
+  const tiles = map.children;
+
+  for (let tile of tiles) {
+    const x = parseInt(tile.dataset.x);
+    const y = parseInt(tile.dataset.y);
+
+    tile.className = 'tile'; // Reset all classes
+    tile.classList.add(getTileClass(gameData[y][x]));
+
+    if (x === ghost.x && y === ghost.y) {
+      tile.classList.add('ghost');
+      if (powerActive) {
+        tile.classList.add('weakGhost');
+      }
+    }
+
+    if (x === pacman.x && y === pacman.y) {
+      tile.classList.add('pacman');
+      if (currentDirection == "up" || 
+          currentDirection == "down" || 
+          currentDirection == "left" || 
+          currentDirection == "right") {
+        tile.classList.add(pacman.direction);
+      }
+    }
+  }
+}
+
+function getTileClass(type) {
+  switch(type) {
+    case WALL: return 'wall';
+    case COIN: return 'coin';
+    case POWER: return 'power';
+    default: return 'ground';
+  }
+}
 // This function creates a map element, fills it with tiles,
 // and adds it to the page.
-function drawMap() {
-  map = document.createElement('div');
+// function drawMap() {
+//   map = document.createElement('div');
 
-  let tiles = createTiles(gameData);
-  // for every tile in tiles
-  // Loop through all tiles
-  for (let tile of tiles) {
-    // Check if the tile is the ghost's current position
-    if (tile.classList.contains('ghost')) {
-      // If the ghost's position is valid (not removed)
-      if (ghost.x !== -1 && ghost.y !== -1) {
-        // If the power-up is active, apply the 'weakGhost' class
-        if (powerActive) {
-          tile.classList.add('weakGhost');  // Change the appearance of the ghost
-        }
-        // Optionally, you can remove the ghost after collision with power-up here
-      } else {
-        // If ghost is removed (ghost.x or ghost.y is -1), don't draw it
-        tile.classList.remove('ghost');
-      }
-    }
+//   let tiles = createTiles(gameData);
+//   // for every tile in tiles
+//   // Loop through all tiles
+//   for (let tile of tiles) {
+//     // Check if the tile is the ghost's current position
+//     if (tile.classList.contains('ghost')) {
+//       // If the ghost's position is valid (not removed)
+//       if (ghost.x !== -1 && ghost.y !== -1) {
+//         // If the power-up is active, apply the 'weakGhost' class
+//         if (powerActive) {
+//           tile.classList.add('weakGhost');  // Change the appearance of the ghost
+//         }
+//         // Optionally, you can remove the ghost after collision with power-up here
+//       } else {
+//         // If ghost is removed (ghost.x or ghost.y is -1), don't draw it
+//         tile.classList.remove('ghost');
+//       }
+//     }
 
-    map.append(tile)
-  }
+//     map.append(tile)
+//   }
 
-  gameContainer.appendChild(map); 
-}
+//   gameContainer.appendChild(map); 
+// }
 
 // This function removes the map element from the page.
-function eraseMap() {
-  gameContainer.removeChild(map);
-}
+// function eraseMap() {
+//   gameContainer.removeChild(map);
+// }
 
 //-------------------------------------------------------------
 // Movement functions
@@ -221,8 +274,7 @@ function gameLoop() {
     ghostRight()
   }
 
-  eraseMap();
-  drawMap();
+  updateMap();
 }
 
 function moveDown() {
@@ -477,7 +529,9 @@ gamepad.addEventListener('touchstart', function(e) {
 function main() {
   // Initialize the game by drawing the map and setting up the
   // keyboard controls.
-  drawMap();
+  // drawMap();
+  initMap();
+  updateMap();
   setupKeyboardControls();
 }
 
