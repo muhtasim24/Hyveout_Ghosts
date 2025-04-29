@@ -239,7 +239,8 @@ h1 {
 } */
 
 .gamepad {
-  width: 40vw;
+  width: 30vw;
+  height: auto;
 }
 @media (min-width: 992px){
   .tile {
