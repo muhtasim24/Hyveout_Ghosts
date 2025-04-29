@@ -59,49 +59,7 @@ let ghost = {
 
 //-------------------------------------------------------------
 // Game map creation functions
-//-------------------------------------------------------------
-// This function converts gameData into DOM elements.
-// function createTiles(data) {
 
-//   // We'll keep the DOM elements in an array.
-//   let tilesArray = [];
-
-//   for (let row of data) {
-
-//     for (let col of row) { // col is the # in the row
-//       let tile = document.createElement('div');
-//       tile.classList.add('tile');
-      
-//       // finding what number col is
-//       // whatver it is, we add the associated class, so it takes its properties
-//       if (col === WALL) {
-//         tile.classList.add('wall');
-//       } else if (col === COIN) {
-//         tile.classList.add('coin');
-//       } else if (col === GROUND) {
-//         tile.classList.add('ground');
-//       } else if (col === PACMAN) {
-//         tile.classList.add('pacman');
-//         tile.classList.add(pacman.direction); // add the class direction so the img is showing that direction
-//       } else if (col === GHOST) {
-//         tile.classList.add('ghost');
-//         //tile.classList.add(ghost.direction);
-//       } else if (col === POWER) {
-//         tile.classList.add('power');
-//       }
-
-//       tilesArray.push(tile); // add that tile to the Array
-//     }
-
-//     // to get to the next row when drawing the map
-//     let brTile = document.createElement('br');
-//     tilesArray.push(brTile);
-//   }
-
-//   // At the end of our function, we return the array
-//   // of configured tiles.
-//   return tilesArray;
-// }
 function initMap() {
   map = document.createElement('div');
   map.id = 'game-map';
@@ -157,40 +115,6 @@ function getTileClass(type) {
     default: return 'ground';
   }
 }
-// This function creates a map element, fills it with tiles,
-// and adds it to the page.
-// function drawMap() {
-//   map = document.createElement('div');
-
-//   let tiles = createTiles(gameData);
-//   // for every tile in tiles
-//   // Loop through all tiles
-//   for (let tile of tiles) {
-//     // Check if the tile is the ghost's current position
-//     if (tile.classList.contains('ghost')) {
-//       // If the ghost's position is valid (not removed)
-//       if (ghost.x !== -1 && ghost.y !== -1) {
-//         // If the power-up is active, apply the 'weakGhost' class
-//         if (powerActive) {
-//           tile.classList.add('weakGhost');  // Change the appearance of the ghost
-//         }
-//         // Optionally, you can remove the ghost after collision with power-up here
-//       } else {
-//         // If ghost is removed (ghost.x or ghost.y is -1), don't draw it
-//         tile.classList.remove('ghost');
-//       }
-//     }
-
-//     map.append(tile)
-//   }
-
-//   gameContainer.appendChild(map); 
-// }
-
-// This function removes the map element from the page.
-// function eraseMap() {
-//   gameContainer.removeChild(map);
-// }
 
 //-------------------------------------------------------------
 // Movement functions
@@ -477,10 +401,6 @@ function setupKeyboardControls() {
     else if (e.key === "ArrowDown") currentDirection = 'down';
   });
 
-  // buttonUp.addEventListener('touchstart', () => currentDirection = 'up');
-  // buttonDown.addEventListener('touchstart', () => currentDirection = 'down');
-  // buttonLeft.addEventListener('touchstart', () => currentDirection = 'left');
-  // buttonRight.addEventListener('touchstart', () => currentDirection = 'right');
 }
 
 const gamepad = document.getElementById('gamepad');
