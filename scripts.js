@@ -424,11 +424,51 @@ function setupKeyboardControls() {
     else if (e.key === "ArrowDown") currentDirection = 'down';
   });
 
-  buttonUp.addEventListener('touchstart', () => currentDirection = 'up');
-  buttonDown.addEventListener('touchstart', () => currentDirection = 'down');
-  buttonLeft.addEventListener('touchstart', () => currentDirection = 'left');
-  buttonRight.addEventListener('touchstart', () => currentDirection = 'right');
+  // buttonUp.addEventListener('touchstart', () => currentDirection = 'up');
+  // buttonDown.addEventListener('touchstart', () => currentDirection = 'down');
+  // buttonLeft.addEventListener('touchstart', () => currentDirection = 'left');
+  // buttonRight.addEventListener('touchstart', () => currentDirection = 'right');
 }
+
+const gamepad = document.getElementById('gamepad');
+
+// Set your different gamepad images
+const gamepadDefault = '/images/gamepad.png';
+const gamepadUp = '/images/gamepadup.png';
+const gamepadDown = '/images/gamepadbottom.png';
+const gamepadLeft = '/images/gamepadleft.png';
+const gamepadRight = '/images/gamepadright.png';
+
+// Handle touches
+gamepad.addEventListener('touchstart', function(e) {
+  const rect = gamepad.getBoundingClientRect();
+  const touch = e.touches[0];
+  const x = touch.clientX - rect.left;
+  const y = touch.clientY - rect.top;
+
+  const width = rect.width;
+  const height = rect.height;
+
+  // Split into regions: top, bottom, left, right
+  if (y < height * 0.3) {
+    // Top
+    gamepad.src = gamepadUp;
+    currentDirection = "up";
+  } else if (y > height * 0.7) {
+    // Bottom
+    gamepad.src = gamepadDown;
+    currentDirection = "down";
+  } else if (x < width * 0.3) {
+    // Left
+    gamepad.src = gamepadLeft;
+    currentDirection = "left";
+  } else if (x > width * 0.7) {
+    // Right
+    gamepad.src = gamepadRight;
+    currentDirection = "right";
+  }
+});
+
 
 
 //-------------------------------------------------------------
