@@ -48,7 +48,7 @@ h1 {
 }
 
 .titleHyve {
-  margin-top: 100px;
+  margin-top: 95px;
   margin-bottom: 0px;
   font-size: 1.1rem;
 }
@@ -252,7 +252,7 @@ h1 {
 } */
 
 .gamepad {
-  width: 33vw;
+  width: 35vw;
 }
 @media (min-width: 992px){
 
