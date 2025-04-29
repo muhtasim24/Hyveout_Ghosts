@@ -67,8 +67,8 @@ h1 {
 /* one another.                                              */
 /*-----------------------------------------------------------*/
 .tile {
-  width: 6vw;
-  height: 4vh;
+  width: 5vw;
+  height: 3vh;
   display: inline-block; /*so blocks are next to each other*/
   vertical-align: top;
 }
