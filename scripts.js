@@ -395,10 +395,11 @@ function showGameOverModal() {
 // that handles that key press.
 function setupKeyboardControls() {
   document.addEventListener('keydown', function (e) {
-    if (e.key === "ArrowLeft") currentDirection = 'left';
-    else if (e.key === "ArrowUp") currentDirection = 'up';
-    else if (e.key === "ArrowRight") currentDirection = 'right';
-    else if (e.key === "ArrowDown") currentDirection = 'down';
+    console.log(e.key);
+    if (e.key === "ArrowLeft" || e.key === "a") currentDirection = 'left';
+    else if (e.key === "ArrowUp" || e.key === "w") currentDirection = 'up';
+    else if (e.key === "ArrowRight" || e.key === "d") currentDirection = 'right';
+    else if (e.key === "ArrowDown" || e.key === "s") currentDirection = 'down';
   });
 
 }
