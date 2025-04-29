@@ -58,7 +58,7 @@ h1 {
   font-size: 1.1rem;
 }
 .scoreCard {
-  font-size: 3rem;
+  font-size: 2.6rem;
   margin-bottom: 5px;
 }
 
@@ -240,7 +240,7 @@ h1 {
 
 .gamepad {
   width: 30vw;
-  height: auto;
+  height: 13vh;
 }
 @media (min-width: 992px){
   .tile {
