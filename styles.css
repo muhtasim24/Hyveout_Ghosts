@@ -44,7 +44,7 @@ h1 {
   font-family: 'PressStart2P', sans-serif;
   color: white;
   text-align: center;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 1);
 }
 
 .titleHyve {
@@ -174,7 +174,7 @@ h1 {
   color: white;
   font-family: 'PressStart2P', sans-serif;
   padding: 1rem;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 1);
   border-radius: 30px;
   text-align: center;
   max-width: 100%;
