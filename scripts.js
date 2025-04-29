@@ -105,6 +105,7 @@ let ghost = {
 function initMap() {
   map = document.createElement('div');
   map.id = 'game-map';
+  map.classList.add('gameMap')
 
   for (let y = 0; y < gameData.length; y++) {
     for (let x = 0; x < gameData[y].length; x++) {
