@@ -10,7 +10,7 @@ var score = 0;
 let gameAudio = new Audio('ghostAudioFinal.m4a');
 let pacAudio = new Audio('waka.mp3');
 
-let gameSpeedInt = setInterval(gameLoop, 190); // adjust 200ms to your desired speed
+let gameSpeedInt = setInterval(gameLoop, 195); // adjust 200ms to your desired speed
 
 let totalCoins = 38;
 let gameData = [
@@ -172,12 +172,6 @@ function checkCollision() {
 
 
 function gameLoop() {
-  console.log(powerActive);
-  console.log(score);
-
-  if (pacman.x === ghost.x && pacman.y === ghost.y) {
-    console.log("collided");
-  }
 
   
   if (totalCoins === 0) {
@@ -202,7 +196,6 @@ function gameLoop() {
 
   // each time we get here i want the ghost to move as well, so we will select a random direction for the ghost
   let ghostMove = randomDirection();
-  //console.log(randomDirection);
   if (ghostMove == 0) {
     // if its a 
     ghostUp();
@@ -429,7 +422,6 @@ function showGameOverModal() {
 // that handles that key press.
 function setupKeyboardControls() {
   document.addEventListener('keydown', function (e) {
-    console.log(e.key);
     if (e.key === "ArrowLeft" || e.key === "a") currentDirection = 'left';
     else if (e.key === "ArrowUp" || e.key === "w") currentDirection = 'up';
     else if (e.key === "ArrowRight" || e.key === "d") currentDirection = 'right';
@@ -538,10 +530,10 @@ document.addEventListener('touchend', function (e) {
 document.querySelector('.nineXPac').addEventListener('click', () => {
   document.getElementById('startModal').style.display = 'none';
   gameAudio.play();
-  gameAudio.volume = 0.2;
+  gameAudio.volume = 0.3;
   pacAudio.play();
   pacAudio.loop = true;
-  pacAudio.volume = 0.05;
+  pacAudio.volume = 0.035;
 });
 
 // document.querySelector('.nineXPac').addEventListener('click', () => {
