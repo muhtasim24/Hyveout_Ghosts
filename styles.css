@@ -169,7 +169,7 @@ h1 {
 
 /* TOUCH BUTTONS */
 .game-container {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   background-color: #34003D;
   border: 5px solid rgb(191, 34, 222);
   display: flex; /* Helps the border fit snugly around the grid */
@@ -312,7 +312,7 @@ h1 {
 }
 
 .controls img{
-  width: 15vw;
+  width: 11vw;
 }
 
 .leftButton {
