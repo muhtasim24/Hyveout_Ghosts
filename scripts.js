@@ -1,15 +1,9 @@
 const gameContainer = document.getElementById('game-container');
-const buttonUp = document.getElementById('up');
-const buttonDown = document.getElementById('down');
-const buttonLeft = document.getElementById('left');
-const buttonRight = document.getElementById('right');
 const scoreText = document.getElementById('score');
 const ninexteenSkin = document.getElementById('nineXPac');
 const purplePacSkin = document.getElementById('purplePac');
 var score = 0;
 let gameAudio = new Audio('ghostAudioFinal.m4a');
-let pacAudio = new Audio('waka.mp3');
-pacAudio.preload = 'auto';
 gameAudio.preload = 'auto';
 
 let gameSpeedInt = setInterval(gameLoop, 200); // adjust 200ms to your desired speed
@@ -408,12 +402,10 @@ function gameOver(message) {
 function showGameOverModal() {
   const modal = document.getElementById('gameOverModal');
   gameAudio.pause();
-  pacAudio.pause();
   modal.style.display = 'flex'; // Show the modal
 
   document.getElementById('restartBtn').addEventListener('click', () => {
     gameAudio.currentTime = 0;
-    pacAudio.currentTime = 0;
     location.reload(); // Simple way to restart game
   });
 }
@@ -446,39 +438,34 @@ const downButton = document.getElementById('down');
 const leftButton = document.getElementById('left');
 const rightButton = document.getElementById('right');
 
-const vertButtonImg = '/images/vertButton.png';
-const vertButtonImgClicked = '/images/vertButtonClicked.png';
-const sideButtonImg = '/images/sideButton.png';
-const sideButtonImgClicked = 'images/sideButtonClicked.png';
+// const vertButtonImg = '/images/vertButton.png';
+// const vertButtonImgClicked = '/images/vertButtonClicked.png';
+// const sideButtonImg = '/images/sideButton.png';
+// const sideButtonImgClicked = 'images/sideButtonClicked.png';
+const buttonImg = '/images/button.png';
+const clickedButtonImg = '/images/buttonClicked.png';
 
 
 upButton.addEventListener('touchstart', () => {
   currentDirection = 'up';
-  upButton.src = '/images/vertButtonClicked.png';
-  downButton.src = vertButtonImg;
-  leftButton.src = sideButtonImg;
-  rightButton.src = sideButtonImg;
+  upButton.src = clickedButtonImg;
+  downButton.src = leftButton.src = rightButton.src = buttonImg;
 })
 downButton.addEventListener('touchstart', () => {
   currentDirection = 'down';
-  downButton.src = '/images/vertButtonClicked.png';
-  upButton.src = vertButtonImg;
-  leftButton.src = sideButtonImg;
-  rightButton.src = sideButtonImg;
+  downButton.src = clickedButtonImg;
+  upButton.src = leftButton.src = rightButton.src = buttonImg;
+
 })
 leftButton.addEventListener('touchstart', () => {
   currentDirection = 'left';
-  leftButton.src = sideButtonImgClicked;
-  rightButton.src = sideButtonImg;
-  upButton.src = vertButtonImg;
-  downButton.src = vertButtonImg;
+  leftButton.src = clickedButtonImg;
+  upButton.src = downButton.src = rightButton.src = buttonImg;
 })
 rightButton.addEventListener('touchstart', () => {
   currentDirection = 'right';
-  rightButton.src = sideButtonImgClicked;
-  leftButton.src = sideButtonImg;
-  upButton.src = vertButtonImg;
-  downButton.src = vertButtonImg;
+  rightButton.src = clickedButtonImg;
+  upButton.src = leftButton.src = downButton.src = buttonImg;
 });
 // Handle touches
 // gamepad.addEventListener('touchstart', function(e) {
@@ -533,18 +520,6 @@ document.querySelector('.nineXPac').addEventListener('click', () => {
   document.getElementById('startModal').style.display = 'none';
   gameAudio.volume = 0.3;
   gameAudio.play();
-  pacAudio.volume = 0;
-  pacAudio.loop = true;
-  pacAudio.play();
-});
-
-document.querySelector('.nineXPac').addEventListener('touchstart', () => {
-  document.getElementById('startModal').style.display = 'none';
-  gameAudio.volume = 0.3;
-  gameAudio.play();
-  pacAudio.volume = 0;
-  pacAudio.loop = true;
-  pacAudio.play();
 });
 // document.querySelector('.nineXPac').addEventListener('click', () => {
 //   selectedSkin = "/images/Pacman_gif_facing_right.gif";
