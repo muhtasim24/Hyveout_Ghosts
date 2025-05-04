@@ -376,12 +376,21 @@ h1 {
   }
   
   .nineFace {
-    width: 10vw;
+    width: 9vw;
   }
   
   .ghostLeft, .ghostRight {
-    width: 8vw;
+    width: 6vw;
   }
 
+  /* GAME OVER ----- */
+  .modal-content {
+    width: 40vw;
+    height: 30vh;
+    font-size: 1.8rem;
+  }
   
+  #restartBtn {
+    font-size: 1.3rem;
+  }
 }
