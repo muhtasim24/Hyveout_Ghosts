@@ -425,6 +425,7 @@ function showGameOverModal() {
 function setupKeyboardControls() {
   document.addEventListener('keydown', function (e) {
     gameAudio.play();
+    gameAudio.volume = 0.4;
     console.log(e.key);
     if (e.key === "ArrowLeft" || e.key === "a") currentDirection = 'left';
     else if (e.key === "ArrowUp" || e.key === "w") currentDirection = 'up';
@@ -446,6 +447,7 @@ const gamepadRight = '/images/gamepadright.png';
 // Handle touches
 gamepad.addEventListener('touchstart', function(e) {
   gameAudio.play();
+  gameAudio.volume = 0.4;
   const rect = gamepad.getBoundingClientRect();
   const touch = e.touches[0];
   const x = touch.clientX - rect.left;
