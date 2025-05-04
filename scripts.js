@@ -413,10 +413,12 @@ function gameOver(message) {
 function showGameOverModal() {
   const modal = document.getElementById('gameOverModal');
   gameAudio.pause();
+  pacAudio.pause();
   modal.style.display = 'flex'; // Show the modal
 
   document.getElementById('restartBtn').addEventListener('click', () => {
     gameAudio.currentTime = 0;
+    pacAudio.currentTime = 0;
     location.reload(); // Simple way to restart game
   });
 }
@@ -498,6 +500,7 @@ document.querySelector('.nineXPac').addEventListener('click', () => {
   gameAudio.play();
   gameAudio.volume = 0.2;
   pacAudio.play();
+  pacAudio.loop = true;
   pacAudio.volume = 0.05;
 });
 
