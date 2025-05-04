@@ -8,6 +8,7 @@ const ninexteenSkin = document.getElementById('nineXPac');
 const purplePacSkin = document.getElementById('purplePac');
 var score = 0;
 let gameAudio = new Audio('ghostAudioFinal.m4a');
+let pacAudio = new Audio('waka.mp3');
 
 let gameSpeedInt = setInterval(gameLoop, 190); // adjust 200ms to your desired speed
 
@@ -495,7 +496,9 @@ document.addEventListener('touchend', function (e) {
 document.querySelector('.nineXPac').addEventListener('click', () => {
   document.getElementById('startModal').style.display = 'none';
   gameAudio.play();
-  gameAudio.volume = 0.4;
+  gameAudio.volume = 0.2;
+  pacAudio.play();
+  pacAudio.volume = 0.05;
 });
 
 // document.querySelector('.nineXPac').addEventListener('click', () => {

@@ -47,7 +47,7 @@ h1 {
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 1);
 }
 
-.titleHyve {
+/* .titleHyve {
   margin-top: 95px;
   margin-bottom: 0px;
   font-size: 1.1rem;
@@ -56,7 +56,28 @@ h1 {
 .titleGhost {
   margin-top: 0px;
   font-size: 1.1rem;
+} */
+
+.introRow {
+  margin-top: 90px;
+  display: flex;
+  justify-content: center; /* center them horizontally */
+  align-items: center;     /* vertically align if needed */
+  gap: 20px;               /* adjust this for desired spacing */
 }
+
+.nineFace {
+  width: 20vw;
+}
+
+.ghostLeft, .ghostRight {
+  width: 15vw;
+}
+
+.ghostLeft{
+  transform: scaleX(-1);
+}
+
 .scoreCard {
   font-size: 2.6rem;
   margin-bottom: 5px;
