@@ -9,6 +9,8 @@ const purplePacSkin = document.getElementById('purplePac');
 var score = 0;
 let gameAudio = new Audio('ghostAudio.m4a');
 
+let gameSpeedInt = setInterval(gameLoop, 190); // adjust 200ms to your desired speed
+
 let totalCoins = 38;
 let gameData = [
   [1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -494,7 +496,6 @@ document.querySelector('.nineXPac').addEventListener('click', () => {
   document.getElementById('startModal').style.display = 'none';
   gameAudio.play();
   gameAudio.volume = 0.4;
-  let gameSpeedInt = setInterval(gameLoop, 190); // adjust 200ms to your desired speed
 });
 
 // document.querySelector('.nineXPac').addEventListener('click', () => {
