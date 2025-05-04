@@ -10,7 +10,7 @@ var score = 0;
 let gameAudio = new Audio('ghostAudioFinal.m4a');
 let pacAudio = new Audio('waka.mp3');
 
-let gameSpeedInt = setInterval(gameLoop, 195); // adjust 200ms to your desired speed
+let gameSpeedInt = setInterval(gameLoop, 200); // adjust 200ms to your desired speed
 
 let totalCoins = 38;
 let gameData = [
@@ -529,11 +529,11 @@ document.addEventListener('touchend', function (e) {
 
 document.querySelector('.nineXPac').addEventListener('click', () => {
   document.getElementById('startModal').style.display = 'none';
-  gameAudio.play();
   gameAudio.volume = 0.3;
-  pacAudio.play();
-  pacAudio.volume = 0.01;
+  gameAudio.play();
+  pacAudio.volume = 0.04;
   pacAudio.loop = true;
+  pacAudio.play();
 });
 
 // document.querySelector('.nineXPac').addEventListener('click', () => {
