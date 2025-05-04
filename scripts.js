@@ -536,6 +536,14 @@ document.querySelector('.nineXPac').addEventListener('click', () => {
   pacAudio.play();
 });
 
+document.querySelector('.nineXPac').addEventListener('touchstart', () => {
+  document.getElementById('startModal').style.display = 'none';
+  gameAudio.volume = 0.3;
+  gameAudio.play();
+  pacAudio.volume = 0.03;
+  pacAudio.loop = true;
+  pacAudio.play();
+});
 // document.querySelector('.nineXPac').addEventListener('click', () => {
 //   selectedSkin = "/images/Pacman_gif_facing_right.gif";
 //   document.getElementById('startModal').style.display = 'none';
