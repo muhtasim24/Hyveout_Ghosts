@@ -59,7 +59,7 @@ h1 {
 } */
 
 .introRow {
-  margin-top: 90px;
+  margin-top: 70px;
   display: flex;
   justify-content: center; /* center them horizontally */
   align-items: center;     /* vertically align if needed */
