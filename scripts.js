@@ -9,6 +9,8 @@ const purplePacSkin = document.getElementById('purplePac');
 var score = 0;
 let gameAudio = new Audio('ghostAudioFinal.m4a');
 let pacAudio = new Audio('waka.mp3');
+pacAudio.preload = 'auto';
+gameAudio.preload = 'auto';
 
 let gameSpeedInt = setInterval(gameLoop, 200); // adjust 200ms to your desired speed
 
