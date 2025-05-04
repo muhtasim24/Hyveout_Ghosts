@@ -438,44 +438,84 @@ function setupKeyboardControls() {
 
 }
 
-const gamepad = document.getElementById('gamepad');
+// const gamepad = document.getElementById('gamepad');
 
-// Set your different gamepad images
-const gamepadDefault = '/images/gamepad.png';
-const gamepadUp = '/images/gamepadup.png';
-const gamepadDown = '/images/gamepadbottom.png';
-const gamepadLeft = '/images/gamepadleft.png';
-const gamepadRight = '/images/gamepadright.png';
+// // Set your different gamepad images
+// const gamepadDefault = '/images/gamepad.png';
+// const gamepadUp = '/images/gamepadup.png';
+// const gamepadDown = '/images/gamepadbottom.png';
+// const gamepadLeft = '/images/gamepadleft.png';
+// const gamepadRight = '/images/gamepadright.png';
 
-// Handle touches
-gamepad.addEventListener('touchstart', function(e) {
-  const rect = gamepad.getBoundingClientRect();
-  const touch = e.touches[0];
-  const x = touch.clientX - rect.left;
-  const y = touch.clientY - rect.top;
+const upButton = document.getElementById('up');
+const downButton = document.getElementById('down');
+const leftButton = document.getElementById('left');
+const rightButton = document.getElementById('right');
 
-  const width = rect.width;
-  const height = rect.height;
+const vertButtonImg = '/images/vertButton.png';
+const vertButtonImgClicked = '/images/vertButtonClicked.png';
+const sideButtonImg = '/images/sideButton.png';
+const sideButtonImgClicked = 'images/sideButtonClicked.png';
 
-  // Split into regions: top, bottom, left, right
-  if (y < height * 0.25) {
-    // Top
-    gamepad.src = gamepadUp;
-    currentDirection = "up";
-  } else if (y > height * 0.75) {
-    // Bottom
-    gamepad.src = gamepadDown;
-    currentDirection = "down";
-  } else if (x < width * 0.5) {
-    // Left
-    gamepad.src = gamepadLeft;
-    currentDirection = "left";
-  } else {
-    // Right
-    gamepad.src = gamepadRight;
-    currentDirection = "right";
-  }
+
+upButton.addEventListener('touchstart', () => {
+  currentDirection = 'up';
+  upButton.src = '/images/vertButtonClicked.png';
+  downButton.src = vertButtonImg;
+  leftButton.src = sideButtonImg;
+  rightButton.src = sideButtonImg;
+})
+downButton.addEventListener('touchstart', () => {
+  currentDirection = 'down';
+  downButton.src = '/images/vertButtonClicked.png';
+  upButton.src = vertButtonImg;
+  leftButton.src = sideButtonImg;
+  rightButton.src = sideButtonImg;
+})
+leftButton.addEventListener('touchstart', () => {
+  currentDirection = 'left';
+  leftButton.src = sideButtonImgClicked;
+  rightButton.src = sideButtonImg;
+  upButton.src = vertButtonImg;
+  downButton.src = vertButtonImg;
+})
+rightButton.addEventListener('touchstart', () => {
+  currentDirection = 'right';
+  rightButton.src = sideButtonImgClicked;
+  leftButton.src = sideButtonImg;
+  upButton.src = vertButtonImg;
+  downButton.src = vertButtonImg;
 });
+// Handle touches
+// gamepad.addEventListener('touchstart', function(e) {
+//   const rect = gamepad.getBoundingClientRect();
+//   const touch = e.touches[0];
+//   const x = touch.clientX - rect.left;
+//   const y = touch.clientY - rect.top;
+
+//   const width = rect.width;
+//   const height = rect.height;
+
+//   // Split into regions: top, bottom, left, right
+//   if (y < height * 0.25) {
+//     // Top
+//     gamepad.src = gamepadUp;
+//     currentDirection = "up";
+//   } else if (y > height * 0.75) {
+//     // Bottom
+//     gamepad.src = gamepadDown;
+//     currentDirection = "down";
+//   } else if (x < width * 0.5) {
+//     // Left
+//     gamepad.src = gamepadLeft;
+//     currentDirection = "left";
+//   } else {
+//     // Right
+//     gamepad.src = gamepadRight;
+//     currentDirection = "right";
+//   }
+// });
+
 
 // Prevent pinch-zoom
 document.addEventListener('gesturestart', function (e) {
