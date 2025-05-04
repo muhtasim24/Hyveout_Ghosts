@@ -58,6 +58,7 @@ h1 {
   font-size: 1.1rem;
 } */
 
+/* ---------- INTRO ROW --------------- */
 .introRow {
   margin-top: 70px;
   display: flex;
@@ -311,6 +312,7 @@ h1 {
   width: 35vw;
 }
 
+/* --------- MOBILE BUTTONS --------*/
 .controls img{
   width: 13vw;
 }
@@ -338,4 +340,48 @@ h1 {
   .controls{
     display: none;
   }
+
+  /* ------ START MODAL ------- */
+  .start-content {
+    width: 65vw;
+    height: 65vh;
+  }
+
+  .faceImg {
+    width: 10vw;
+  }
+
+  .skins {
+    gap: 5rem; /* space between the two buttons */
+  }
+
+  .skin-option button {
+    width: 20vw;
+    height: 15vh;
+    cursor: pointer;
+  }
+
+  .skin-option button:hover {
+    width: 20vw;
+    height: 15vh;
+    cursor: pointer;
+    transform: scale(1.05);
+  }
+
+  /* -------- INTRO ROW -------------- */
+  .introRow {
+    margin-top: 85px;
+    gap: 100px;               /* adjust this for desired spacing */
+    margin-bottom: 0px;
+  }
+  
+  .nineFace {
+    width: 10vw;
+  }
+  
+  .ghostLeft, .ghostRight {
+    width: 8vw;
+  }
+
+  
 }
