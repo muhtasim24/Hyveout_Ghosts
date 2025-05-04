@@ -110,7 +110,7 @@ h1 {
   background-repeat: no-repeat;
   background-size: contain; /* or cover, depending on your need */
   background-position: center;
-  transition: transform 0.1ms ease; 
+  transition: transform 0.01ms linear; 
 
 }
 
@@ -135,7 +135,7 @@ h1 {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  transition: transform 0.1ms ease; 
+  transition: transform 0.01ms linear; 
 
 }
 

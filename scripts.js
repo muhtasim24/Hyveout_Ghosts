@@ -5,9 +5,9 @@ const buttonLeft = document.getElementById('left');
 const buttonRight = document.getElementById('right');
 const scoreText = document.getElementById('score');
 var score = 0;
+let gameAudio = new Audio('ghostAudio.m4a');
 
-let gameSpeedInt = setInterval(gameLoop, 200); // adjust 200ms to your desired speed
-
+let gameSpeedInt = setInterval(gameLoop, 190); // adjust 200ms to your desired speed
 
 let totalCoins = 38;
 let gameData = [
@@ -147,20 +147,35 @@ function randomDirection(lastMove) {
   return validMoves[randomIndex];
 }
 }
+function checkCollision() {
+     // ghosts should become blue
+  if (ghost && ghost.x !== -1 && ghost.y !== -1) {
+      if (pacman.x === ghost.x && pacman.y === ghost.y && !powerActive) {
+      // gameOver("Game Over! You were caught by the ghost!");
+      gameData[pacman.y][pacman.x] = GROUND;
+      updateMap(); // Make sure this updates the visual before modal
+      clearInterval(gameSpeedInt);
+      showGameOverModal();
+      return;
+    }
+  }
+
+    if (pacman.x === ghost.x && pacman.y === ghost.y && powerActive) {
+    // Remove the ghost from the map (or reset its position)
+    ghost.x = -1; // Or any value off the grid to "remove" it visually
+    ghost.y = -1;
+  }
+}
 
 
 function gameLoop() {
   console.log(powerActive);
   console.log(score);
-    // ghosts should become blue
-  if (ghost && ghost.x !== -1 && ghost.y !== -1) {
-    if (pacman.x === ghost.x && pacman.y === ghost.y && !powerActive) {
-    // gameOver("Game Over! You were caught by the ghost!");
-    clearInterval(gameSpeedInt);
-    showGameOverModal();
-    return;
+
+  if (pacman.x === ghost.x && pacman.y === ghost.y) {
+    console.log("collided");
   }
-}
+
   
   if (totalCoins === 0) {
     clearInterval(gameSpeedInt);
@@ -169,11 +184,6 @@ function gameLoop() {
     return;
   }
 
-  if (pacman.x === ghost.x && pacman.y === ghost.y && powerActive) {
-    // Remove the ghost from the map (or reset its position)
-    ghost.x = -1; // Or any value off the grid to "remove" it visually
-    ghost.y = -1;
-  }
 
   if (currentDirection === 'left') {
     moveLeft();
@@ -184,6 +194,8 @@ function gameLoop() {
   } else if (currentDirection === 'down') {
     moveDown();
   }
+
+  checkCollision();
 
   // each time we get here i want the ghost to move as well, so we will select a random direction for the ghost
   let ghostMove = randomDirection();
@@ -199,6 +211,7 @@ function gameLoop() {
     ghostRight()
   }
 
+  checkCollision();
   updateMap();
 }
 
@@ -231,12 +244,15 @@ function moveDown() {
 
 function ghostDown() {
   ghost.direction = 'ghost';
-  if (gameData[ghost.y+1][ghost.x] !== WALL) {
+  if (gameData[ghost.y+1][ghost.x] !== WALL && gameData[ghost.y+1][ghost.x] !== POWER) {
     // if its not a wall it can be ground or a coin
     // if its a coin, stay as COIN, if its ground stay as ground
     if (gameData[ghost.y + 1][ghost.x] == COIN){
       gameData[ghost.y][ghost.x] = COIN; // where they are NOW becomes GROUND
-    } else {
+    } else if (gameData[ghost.y + 1][ghost.x] == POWER) {
+      gameData[ghost.y][ghost.x] = POWER;
+    }
+    else {
       gameData[ghost.y][ghost.x] = GROUND; // where they are now becomes a coin
     }
     ghost.y = ghost.y + 1;
@@ -274,12 +290,15 @@ function moveUp() {
 // if it is a wall do nothing
 function ghostUp() {
   ghost.direction = 'up';
-  if (gameData[ghost.y-1][ghost.x] !== WALL) {
+  if (gameData[ghost.y-1][ghost.x] !== WALL && gameData[ghost.y-1][ghost.x] !== POWER) {
     // if its not a wall it can be ground or a coin
     // if its a coin, stay as COIN, if its ground stay as ground
     if (gameData[ghost.y-1][ghost.x] == COIN){
       gameData[ghost.y][ghost.x] = COIN; // where they are NOW becomes GROUND
-    } else {
+    }// else if (gameData[ghost.y-1][ghost.x] == POWER) {
+    //   gameData[ghost.y][ghost.x] = POWER;
+    // }
+    else {
       gameData[ghost.y][ghost.x] = GROUND; // where they are now becomes a coin
     }
     ghost.y = ghost.y - 1;
@@ -316,12 +335,16 @@ function moveLeft() {
 
 function ghostLeft() {
   ghost.direction = 'left';
-  if (gameData[ghost.y][ghost.x-1] !== WALL) {
+  if (gameData[ghost.y][ghost.x-1] !== WALL && gameData[ghost.y][ghost.x-1] !== POWER) {
     // if its not a wall it can be ground or a coin
     // if its a coin, stay as COIN, if its ground stay as ground
     if (gameData[ghost.y][ghost.x-1] == COIN){
       gameData[ghost.y][ghost.x] = COIN; // where they are NOW becomes GROUND
-    } else {
+    } 
+    // else if (gameData[ghost.y][ghost.x-1] == POWER) {
+    //   gameData[ghost.y][ghost.x] = POWER;
+    // }
+    else {
       gameData[ghost.y][ghost.x] = GROUND; // where they are now becomes a coin
     }
     ghost.x = ghost.x - 1;
@@ -358,12 +381,16 @@ function moveRight() {
 
 function ghostRight() {
   ghost.direction = 'right';
-  if (gameData[ghost.y][ghost.x+1] !== WALL) {
+  if (gameData[ghost.y][ghost.x+1] !== WALL && gameData[ghost.y][ghost.x+1] !== POWER) {
     // if its not a wall it can be ground or a coin
     // if its a coin, stay as COIN, if its ground stay as ground
     if (gameData[ghost.y][ghost.x+1] == COIN){
       gameData[ghost.y][ghost.x] = COIN; // where they are NOW becomes GROUND
-    } else {
+    } 
+    // else if (gameData[ghost.y][ghost.x+1] == POWER) {
+    //     gameData[ghost.y][ghost.x] = POWER;
+    // }
+    else {
       gameData[ghost.y][ghost.x] = GROUND; // where they are now becomes a coin
     }
     ghost.x = ghost.x + 1 ;
@@ -382,9 +409,11 @@ function gameOver(message) {
 
 function showGameOverModal() {
   const modal = document.getElementById('gameOverModal');
+  gameAudio.pause();
   modal.style.display = 'flex'; // Show the modal
 
   document.getElementById('restartBtn').addEventListener('click', () => {
+    gameAudio.currentTime = 0;
     location.reload(); // Simple way to restart game
   });
 }
@@ -468,6 +497,7 @@ function main() {
   initMap();
   updateMap();
   setupKeyboardControls();
+  gameAudio.play();
 }
 
 // Finally, after we define all of our functions, we need to start
