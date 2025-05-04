@@ -424,6 +424,7 @@ function showGameOverModal() {
 // that handles that key press.
 function setupKeyboardControls() {
   document.addEventListener('keydown', function (e) {
+    gameAudio.play();
     console.log(e.key);
     if (e.key === "ArrowLeft" || e.key === "a") currentDirection = 'left';
     else if (e.key === "ArrowUp" || e.key === "w") currentDirection = 'up';
@@ -444,6 +445,7 @@ const gamepadRight = '/images/gamepadright.png';
 
 // Handle touches
 gamepad.addEventListener('touchstart', function(e) {
+  gameAudio.play();
   const rect = gamepad.getBoundingClientRect();
   const touch = e.touches[0];
   const x = touch.clientX - rect.left;
@@ -497,7 +499,6 @@ function main() {
   initMap();
   updateMap();
   setupKeyboardControls();
-  gameAudio.play();
 }
 
 // Finally, after we define all of our functions, we need to start
