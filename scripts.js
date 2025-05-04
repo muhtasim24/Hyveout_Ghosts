@@ -532,8 +532,8 @@ document.querySelector('.nineXPac').addEventListener('click', () => {
   gameAudio.play();
   gameAudio.volume = 0.3;
   pacAudio.play();
+  pacAudio.volume = 0.01;
   pacAudio.loop = true;
-  pacAudio.volume = 0.035;
 });
 
 // document.querySelector('.nineXPac').addEventListener('click', () => {
