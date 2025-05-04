@@ -7,7 +7,7 @@ const scoreText = document.getElementById('score');
 const ninexteenSkin = document.getElementById('nineXPac');
 const purplePacSkin = document.getElementById('purplePac');
 var score = 0;
-let gameAudio = new Audio('ghostAudio.m4a');
+let gameAudio = new Audio('ghostAudioFinal.m4a');
 
 let gameSpeedInt = setInterval(gameLoop, 190); // adjust 200ms to your desired speed
 
