@@ -64,6 +64,7 @@ h1 {
   justify-content: center; /* center them horizontally */
   align-items: center;     /* vertically align if needed */
   gap: 20px;               /* adjust this for desired spacing */
+  margin-bottom: 0px;
 }
 
 .nineFace {
@@ -80,6 +81,7 @@ h1 {
 
 .scoreCard {
   font-size: 2.6rem;
+  margin-top: 10px;
   margin-bottom: 5px;
 }
 
