@@ -191,7 +191,7 @@ h1 {
 
 /* ---------------START MODAL -----------*/
 .startModal {
-  display: none; 
+  display: flex; 
   position: fixed;
   z-index: 1000;
   left: 0;
