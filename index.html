@@ -8,6 +8,24 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <div id="startModal" class="startModal">
+    <div class="start-content">
+      <img class="faceImg" src="/images/ninexteen.png">
+      <h1 class="introText">HELP NINEXTEEN ESCAPE GHOSTS!</h1>
+      <h1 class="chooseText">CHOOSE YOUR SKIN</h1>
+      <div class="skins">
+        <div class="skin-option">
+          <button id='nineXPac' class="nineXPac"><img src="/images/Pacman_gif_facing_right.gif"></button>
+          <figcaption class="gif-caption">NINEXTEEN</figcaption>
+        </div>
+        <div class="skin-option">
+          <button id='purplePac' class="purplePac"><img src="/images/locked.gif"></button>
+          <figcaption class="gif-caption">PURPLE WORLD</figcaption>
+        </div>
+      </div>
+  
+    </div>
+  </div>
   <div class="main-border"></div>
   <h1 class="titleHyve">HYVEOUT PRESENTS</h1>
   <h1 class="titleGhost">"GHOSTS"</h1>
@@ -21,17 +39,6 @@
   </div>
   <div id="game-container" class="game-container"></div>
 
-  <!-- <div id="controls">
-    <button id='up' class="control-btn" 
-      onclick="moveUp(); eraseMap(); drawMap();">⬆️</button><br>
-
-      <button id='left' class="control-btn" 
-        onclick="moveLeft(); eraseMap(); drawMap();">⬅️</button>
-        <button id = 'down' class="control-btn" 
-        onclick="moveDown(); eraseMap(); drawMap();">⬇️</button>
-      <button id = 'right' class="control-btn" 
-        onclick="moveRight(); eraseMap(); drawMap();">➡️</button>
-  </div> -->
   <div id="controls" class="controls">
     <img id="gamepad" class="gamepad" src="/images/gamepad.png">
   </div>

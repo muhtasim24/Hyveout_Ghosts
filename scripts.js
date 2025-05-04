@@ -4,10 +4,10 @@ const buttonDown = document.getElementById('down');
 const buttonLeft = document.getElementById('left');
 const buttonRight = document.getElementById('right');
 const scoreText = document.getElementById('score');
+const ninexteenSkin = document.getElementById('nineXPac');
+const purplePacSkin = document.getElementById('purplePac');
 var score = 0;
 let gameAudio = new Audio('ghostAudio.m4a');
-
-let gameSpeedInt = setInterval(gameLoop, 190); // adjust 200ms to your desired speed
 
 let totalCoins = 38;
 let gameData = [
@@ -424,8 +424,6 @@ function showGameOverModal() {
 // that handles that key press.
 function setupKeyboardControls() {
   document.addEventListener('keydown', function (e) {
-    gameAudio.play();
-    gameAudio.volume = 0.4;
     console.log(e.key);
     if (e.key === "ArrowLeft" || e.key === "a") currentDirection = 'left';
     else if (e.key === "ArrowUp" || e.key === "w") currentDirection = 'up';
@@ -446,8 +444,6 @@ const gamepadRight = '/images/gamepadright.png';
 
 // Handle touches
 gamepad.addEventListener('touchstart', function(e) {
-  gameAudio.play();
-  gameAudio.volume = 0.4;
   const rect = gamepad.getBoundingClientRect();
   const touch = e.touches[0];
   const x = touch.clientX - rect.left;
@@ -490,6 +486,28 @@ document.addEventListener('touchend', function (e) {
   }
   lastTouchEnd = now;
 });
+
+// // SKIN SELECTION
+// let selectedSkin = "/images/Pacman_gif_facing_right.gif";
+
+document.querySelector('.nineXPac').addEventListener('click', () => {
+  document.getElementById('startModal').style.display = 'none';
+  gameAudio.play();
+  gameAudio.volume = 0.4;
+  let gameSpeedInt = setInterval(gameLoop, 190); // adjust 200ms to your desired speed
+});
+
+// document.querySelector('.nineXPac').addEventListener('click', () => {
+//   selectedSkin = "/images/Pacman_gif_facing_right.gif";
+//   document.getElementById('startModal').style.display = 'none';
+// });
+
+
+// document.querySelector('.purplePac').addEventListener('click', () => {
+//   selectedSkin = "/images/purplePac.gif";
+//   document.getElementById('startModal').style.display = 'none';
+// });
+
 
 //-------------------------------------------------------------
 // Main game setup function
