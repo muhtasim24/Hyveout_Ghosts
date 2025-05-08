@@ -254,6 +254,7 @@ h1 {
   cursor: pointer;
   width: 35vw;
   height: 15vh;
+  border: solid black;
 }
 
 .gif-caption {
@@ -305,6 +306,7 @@ h1 {
   font-family: 'PressStart2P', sans-serif;
   box-shadow: 0.3px -5px 1px rgb(174,18,223);
   border-radius: 5px;
+  border: solid black;
 
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   text-shadow:
