@@ -265,6 +265,12 @@ h1 {
   -3px -0px 0 black;  /* top-left */
 }
 
+.red {
+  color: rgb(86, 252, 89);
+  font-size: 0.6rem;
+}
+
+
 /* ---------- GAME OVER MODAL ----------- */
 .modal {
   display: none;
