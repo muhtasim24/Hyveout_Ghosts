@@ -5,7 +5,7 @@ const purplePacSkin = document.getElementById('purplePac');
 var score = 0;
 let gameAudio = new Audio('ghostAudioFinal.m4a');
 gameAudio.preload = 'auto';
-
+let skin = 0;
 let gameSpeedInt;
 
 let totalCoins = 38;
@@ -96,6 +96,9 @@ function updateMap() {
 
     if (x === pacman.x && y === pacman.y) {
       tile.classList.add('pacman');
+      if (skin === 2) {
+        tile.classList.add('skin2');
+      }
       if (currentDirection == "up" || 
           currentDirection == "down" || 
           currentDirection == "left" || 
@@ -518,6 +521,14 @@ document.addEventListener('touchend', function (e) {
 // let selectedSkin = "./images/Pacman_gif_facing_right.gif";
 
 document.querySelector('.nineXPac').addEventListener('click', () => {
+  document.getElementById('startModal').style.display = 'none';
+  gameSpeedInt = setInterval(gameLoop, 200); // adjust 200ms to your desired speed
+  gameAudio.volume = 0.3;
+  gameAudio.play();
+});
+
+document.querySelector('.purplePac').addEventListener('click', () => {
+  skin = 2;
   document.getElementById('startModal').style.display = 'none';
   gameSpeedInt = setInterval(gameLoop, 200); // adjust 200ms to your desired speed
   gameAudio.volume = 0.3;

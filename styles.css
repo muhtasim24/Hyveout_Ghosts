@@ -142,7 +142,9 @@ h1 {
   transition: transform 0.01ms linear; 
 
 }
-
+.skin2 {
+  background-image: url('./images/purplePac.gif');
+}
 .left {
   transform: scaleX(-1);
 }
