@@ -428,23 +428,23 @@ function setupKeyboardControls() {
 // const gamepad = document.getElementById('gamepad');
 
 // // Set your different gamepad images
-// const gamepadDefault = '/images/gamepad.png';
-// const gamepadUp = '/images/gamepadup.png';
-// const gamepadDown = '/images/gamepadbottom.png';
-// const gamepadLeft = '/images/gamepadleft.png';
-// const gamepadRight = '/images/gamepadright.png';
+// const gamepadDefault = './images/gamepad.png';
+// const gamepadUp = './images/gamepadup.png';
+// const gamepadDown = './images/gamepadbottom.png';
+// const gamepadLeft = './images/gamepadleft.png';
+// const gamepadRight = './images/gamepadright.png';
 
 const upButton = document.getElementById('up');
 const downButton = document.getElementById('down');
 const leftButton = document.getElementById('left');
 const rightButton = document.getElementById('right');
 
-// const vertButtonImg = '/images/vertButton.png';
-// const vertButtonImgClicked = '/images/vertButtonClicked.png';
-// const sideButtonImg = '/images/sideButton.png';
+// const vertButtonImg = './images/vertButton.png';
+// const vertButtonImgClicked = './images/vertButtonClicked.png';
+// const sideButtonImg = './images/sideButton.png';
 // const sideButtonImgClicked = 'images/sideButtonClicked.png';
-const buttonImg = '/images/button.png';
-const clickedButtonImg = '/images/buttonClicked.png';
+const buttonImg = './images/button.png';
+const clickedButtonImg = './images/buttonClicked.png';
 
 
 upButton.addEventListener('touchstart', () => {
@@ -515,7 +515,7 @@ document.addEventListener('touchend', function (e) {
 });
 
 // // SKIN SELECTION
-// let selectedSkin = "/images/Pacman_gif_facing_right.gif";
+// let selectedSkin = "./images/Pacman_gif_facing_right.gif";
 
 document.querySelector('.nineXPac').addEventListener('click', () => {
   document.getElementById('startModal').style.display = 'none';
@@ -524,13 +524,13 @@ document.querySelector('.nineXPac').addEventListener('click', () => {
   gameAudio.play();
 });
 // document.querySelector('.nineXPac').addEventListener('click', () => {
-//   selectedSkin = "/images/Pacman_gif_facing_right.gif";
+//   selectedSkin = "./images/Pacman_gif_facing_right.gif";
 //   document.getElementById('startModal').style.display = 'none';
 // });
 
 
 // document.querySelector('.purplePac').addEventListener('click', () => {
-//   selectedSkin = "/images/purplePac.gif";
+//   selectedSkin = "./images/purplePac.gif";
 //   document.getElementById('startModal').style.display = 'none';
 // });
 

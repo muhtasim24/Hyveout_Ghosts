@@ -22,7 +22,7 @@ body {
 .main-border {
   width: 100%;
   height: 100%;
-  background-image: url("/images/main-border.png");
+  background-image: url("./images/main-border.png");
   background-size: 100% 100%;
   position: absolute;
   top: 0;
@@ -135,7 +135,7 @@ h1 {
 /* using different background images based on class name.    */
 /*-----------------------------------------------------------*/
 .pacman {
-  background-image: url('/images/Pacman_gif_facing_right.gif');
+  background-image: url('./images/Pacman_gif_facing_right.gif');
   background-repeat: no-repeat;
   background-size: contain; /* or cover, depending on your need */
   background-position: center;
@@ -157,7 +157,7 @@ h1 {
 }
 
 .ghost {
-  background-image: url('/images/ghost.png');
+  background-image: url('./images/ghost.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -166,7 +166,7 @@ h1 {
 }
 
 .weakGhost {
-  background-image: url('/images/weakGhost.png');  
+  background-image: url('./images/weakGhost.png');  
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
