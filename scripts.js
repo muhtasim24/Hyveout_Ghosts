@@ -176,7 +176,12 @@ function gameLoop() {
   if (totalCoins === 0) {
     clearInterval(gameSpeedInt);
     //window.location.href = 'https://youtu.be/9RTpwXL6AbM?si=GHacM7cTs1wwXBtJ';
+    console.log(skin);
+    if (skin === 2) {
+      window.location.href = "https://youtu.be/ydxfoRTTSVM?si=UaP4Oh2MNafmQT8E";
+    } else{
     window.location.href = 'https://youtu.be/FyZEULIMtVk?si=wDU7ePq8Q0opBIHW';
+    }
     // gameOver("You Win! All coins collected!");
     return;
   }
